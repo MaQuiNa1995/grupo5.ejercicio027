@@ -21,8 +21,6 @@ import org.springframework.transaction.annotation.Transactional;
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Dummie;
 import es.cic.curso.grupo5.ejercicio027.backend.service.ClaseDummieService;
 
-
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:es/cic/curso/grupo5.ejercicio027/applicationContext.xml" })
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, TransactionalTestExecutionListener.class })

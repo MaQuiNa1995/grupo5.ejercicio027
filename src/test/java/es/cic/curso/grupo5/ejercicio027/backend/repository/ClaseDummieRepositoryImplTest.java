@@ -12,7 +12,8 @@ import es.cic.curso.grupo5.ejercicio027.backend.repository.IRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-    "classpath:es/cic/curso/grupo5.ejercicio027/applicationContext.xml"})
+	"classpath:es/cic/curso/grupo5.ejercicio027/applicationContext.xml"}
+)
 
 public class ClaseDummieRepositoryImplTest extends AbstractRepositoryImplTest<Long, Dummie> {
 

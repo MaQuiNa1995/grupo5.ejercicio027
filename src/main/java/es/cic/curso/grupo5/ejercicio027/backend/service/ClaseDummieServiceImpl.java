@@ -3,14 +3,15 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.cic.curso.curso18.ejercicio026.backend.service;
+package es.cic.curso.grupo5.ejercicio027.backend.service;
 
-import es.cic.curso.curso18.ejercicio026.backend.dominio.Dummie;
-import es.cic.curso.curso18.ejercicio026.backend.repository.ClaseDummieRepository;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Dummie;
+import es.cic.curso.grupo5.ejercicio027.backend.repository.ClaseDummieRepository;
 
 /**
  *

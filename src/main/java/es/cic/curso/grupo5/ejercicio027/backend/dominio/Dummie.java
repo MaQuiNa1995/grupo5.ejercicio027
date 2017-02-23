@@ -3,13 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package es.cic.curso.curso18.ejercicio026.backend.dominio;
+package es.cic.curso.grupo5.ejercicio027.backend.dominio;
 
-import es.cic.curso.curso18.ejercicio026.backend.repository.Identificable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+
+import es.cic.curso.grupo5.ejercicio027.backend.repository.Identificable;
 
 /**
  *

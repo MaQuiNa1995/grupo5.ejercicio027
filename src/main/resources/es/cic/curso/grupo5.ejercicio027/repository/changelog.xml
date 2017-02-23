@@ -6,7 +6,7 @@
     
     <changeSet author="usuario (generated)" id="1400847488681-1">
         
-        <createTable catalogName="curso18" tableName="Dummie">
+        <createTable catalogName="grupo5" tableName="Dummie">
             <column autoIncrement="true" name="id" type="INT(10)">
                 <constraints primaryKey="true" />
             </column>

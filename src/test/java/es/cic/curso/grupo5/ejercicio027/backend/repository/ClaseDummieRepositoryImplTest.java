@@ -1,15 +1,18 @@
-package es.cic.curso.curso18.ejercicio026.backend.repository;
+package es.cic.curso.grupo5.ejercicio027.backend.repository;
 
-import es.cic.curso.curso18.ejercicio026.backend.dominio.Dummie;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Dummie;
+import es.cic.curso.grupo5.ejercicio027.backend.repository.ClaseDummieRepository;
+import es.cic.curso.grupo5.ejercicio027.backend.repository.IRepository;
+
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-    "classpath:es/cic/curso/curso18.ejercicio026/applicationContext.xml"})
+    "classpath:es/cic/curso/grupo5.ejercicio027/applicationContext.xml"})
 
 public class ClaseDummieRepositoryImplTest extends AbstractRepositoryImplTest<Long, Dummie> {
 

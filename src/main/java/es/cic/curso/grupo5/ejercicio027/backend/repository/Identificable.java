@@ -1,4 +1,4 @@
-package es.cic.curso.curso18.ejercicio026.backend.repository;
+package es.cic.curso.grupo5.ejercicio027.backend.repository;
 
 import java.io.Serializable;
 

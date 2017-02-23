@@ -1,7 +1,4 @@
-package es.cic.curso.curso18.ejercicio026.service;
-
-import es.cic.curso.curso18.ejercicio026.backend.dominio.Dummie;
-import es.cic.curso.curso18.ejercicio026.backend.service.ClaseDummieService;
+package es.cic.curso.grupo5.ejercicio027.backend.service;
 
 import java.util.List;
 
@@ -21,10 +18,13 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Dummie;
+import es.cic.curso.grupo5.ejercicio027.backend.service.ClaseDummieService;
+
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:es/cic/curso/curso18.ejercicio026/applicationContext.xml" })
+@ContextConfiguration(locations = { "classpath:es/cic/curso/grupo5.ejercicio027/applicationContext.xml" })
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, TransactionalTestExecutionListener.class })
 @Transactional
 public class ClaseDummieServiceImplTest {

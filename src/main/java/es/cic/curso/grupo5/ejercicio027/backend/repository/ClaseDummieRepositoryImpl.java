@@ -1,7 +1,8 @@
-package es.cic.curso.curso18.ejercicio026.backend.repository;
+package es.cic.curso.grupo5.ejercicio027.backend.repository;
 
-import es.cic.curso.curso18.ejercicio026.backend.dominio.Dummie;
 import org.springframework.stereotype.Repository;
+
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Dummie;
 
 @Repository
 public class ClaseDummieRepositoryImpl extends AbstractRepositoryImpl<Long, Dummie> implements ClaseDummieRepository {

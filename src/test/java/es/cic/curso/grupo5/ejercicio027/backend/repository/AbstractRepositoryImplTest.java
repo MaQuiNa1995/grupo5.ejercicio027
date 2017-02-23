@@ -1,7 +1,5 @@
-package es.cic.curso.curso18.ejercicio026.backend.repository;
+package es.cic.curso.grupo5.ejercicio027.backend.repository;
 
-import es.cic.curso.curso18.ejercicio026.backend.repository.IRepository;
-import es.cic.curso.curso18.ejercicio026.backend.repository.Identificable;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -18,6 +16,9 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
+
+import es.cic.curso.grupo5.ejercicio027.backend.repository.IRepository;
+import es.cic.curso.grupo5.ejercicio027.backend.repository.Identificable;
 
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, TransactionalTestExecutionListener.class})
 @Transactional

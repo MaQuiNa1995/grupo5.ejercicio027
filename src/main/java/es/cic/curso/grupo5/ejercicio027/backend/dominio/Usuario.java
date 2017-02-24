@@ -36,9 +36,8 @@ public class Usuario implements Identificable<Long>{
 		super();
 	}
 	
-	public Usuario(Long id, String nombre, String password, String rol, String email) {
+	public Usuario(String nombre, String password, String rol, String email) {
 		super();
-		this.id = id;
 		this.nombre = nombre;
 		this.password = password;
 		this.rol = rol;

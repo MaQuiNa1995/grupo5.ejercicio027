@@ -37,9 +37,8 @@ public class Historico implements Identificable<Long>{
 		super();
 	}
 
-	public Historico(Long id, String operacion, String hora, Usuario usuario) {
+	public Historico(String operacion, String hora, Usuario usuario) {
 		super();
-		this.id = id;
 		this.operacion = operacion;
 		this.hora = hora;
 		this.usuario = usuario;

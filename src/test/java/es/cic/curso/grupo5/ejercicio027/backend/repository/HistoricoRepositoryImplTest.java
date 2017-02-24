@@ -22,7 +22,6 @@ public class HistoricoRepositoryImplTest extends AbstractRepositoryImplTest<Long
     private HistoricoRepository sut;
 
     @Before
-    @Override
     public void setUp() throws Exception {
         super.setUp();
     }
@@ -31,7 +30,7 @@ public class HistoricoRepositoryImplTest extends AbstractRepositoryImplTest<Long
     public Historico getInstanceDeTParaNuevo() {
     	
     	Usuario usuario = new Usuario("Christian","curso18","Admin","maquina1995@gmail.com");
-    	
+    	em.persist(usuario);
     	
         Historico claseHistorico = new Historico();
         claseHistorico.setOperacion("Tirar la basura");
@@ -45,7 +44,7 @@ public class HistoricoRepositoryImplTest extends AbstractRepositoryImplTest<Long
     @Override
     public Historico getInstanceDeTParaLectura() {
     	Usuario usuario = new Usuario("Christian","curso18","Admin","maquina1995@gmail.com");
-    	
+    	em.persist(usuario);
     	
         Historico claseHistorico = new Historico();
         claseHistorico.setOperacion("Tirar la basura");
@@ -87,6 +86,10 @@ public class HistoricoRepositoryImplTest extends AbstractRepositoryImplTest<Long
         }
         
         if (!t1.getHora().equals(t2.getHora())) {
+            return false;
+        }
+        
+        if (!t1.getUsuario().equals(t2.getUsuario())) {
             return false;
         }
         

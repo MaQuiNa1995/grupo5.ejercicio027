@@ -1,11 +1,11 @@
 package es.cic.curso.grupo5.ejercicio027.backend.service;
 
+import static org.junit.Assert.*;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +19,7 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.transaction.annotation.Transactional;
 
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
-import es.cic.curso.grupo5.ejercicio027.backend.service.HistoricoService;
+import es.cic.curso.grupo5.ejercicio027.backend.service.UsuarioService;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -46,28 +46,34 @@ public class UsuarioServiceImplTest {
 
 	@Test
 	public void testAniadirUuario() {
-		Usuario usuarioCreado = usuarioService.aniadirUsuario(usuario);
-		assertNotNull(usuarioCreado.getId());
+		usuarioService.aniadirUsuario(usuario1);
+		usuarioService.aniadirUsuario(usuario2);
+		usuarioService.aniadirUsuario(usuario3);
+		
+		assertNotNull(usuario1.getId());
+		assertNotNull(usuario2.getId());
+		assertNotNull(usuario3.getId());
 	}
 
 	@Test
 	public void testModificarUsuario() {
 		
-		usuarioCreado.setNombre("Jose");
-		usuarioCreado.ModificarUsuario();
-		assertEquals();
+		usuario2.setNombre("Jose");
+		usuarioService.modificarUsuario(usuario2);
+		assertEquals(usuario2.getNombre(), "Jose");
 	}
 
 	@Test
-	public void testBorrarClaseDummie() {
-		Long idUsuario = 0L;
-		usuarioService.borrarUsuario(idUsuario);
+	public void testBorrarUsuario() {
+		Usuario usuarioABorrar = new Usuario("juan", "juan", "administrador", "juan@hotmail.com");
+		usuarioService.aniadirUsuario(usuarioABorrar);
+		usuarioService.borrarUsuario(usuarioABorrar.getId());
 		List<Usuario> listaUsuario = usuarioService.listarUsuario();
 		assertEquals(listaUsuario.size(), 3);
 	}
 
 	@Test
-	public void testListarClaseDummie() {
+	public void testListarUsuario() {
 		List<Usuario> listaUsuario = usuarioService.listarUsuario();
 		for (Usuario u : listaUsuario) {
 			assertNotNull(u.getId());

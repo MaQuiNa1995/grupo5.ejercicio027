@@ -26,11 +26,11 @@
         </createTable>
         
         <addForeignKeyConstraint 
-            constraintName="fk_usuario_historico" 
-            referencedTableName="HISTORICO" 
+            constraintName="fk_hitorico_idusuario" 
+            referencedTableName="USUARIO" 
             baseColumnNames="idusuario" 
-            baseTableName="USUARIO" 
-            referencedColumnNames="id"/> 
+            baseTableName="HISTORICO" 
+            referencedColumnNames="id"/>     
         
     </changeSet>
     

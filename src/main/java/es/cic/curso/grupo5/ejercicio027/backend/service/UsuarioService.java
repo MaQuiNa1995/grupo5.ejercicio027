@@ -21,9 +21,11 @@ public interface UsuarioService {
 
     void borrarUsuario(Long id);
     
-    Usuario modificarHistorico(Usuario usuario);
+    Usuario modificarUsuario(Usuario usuario);
 
     Usuario obtenerUsuario(Long id);
 
     List<Usuario> listarUsuario();
+
+	
 }

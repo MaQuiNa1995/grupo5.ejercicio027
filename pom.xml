@@ -7,7 +7,7 @@
     <artifactId>grupo5.ejercicio027</artifactId>
     <packaging>war</packaging>
     <version>1.0-SNAPSHOT</version>
-    <name>curso18.ejercicio026</name>
+    <name>grupo5.ejercicio027</name>
 
     <prerequisites>
         <maven>3</maven>

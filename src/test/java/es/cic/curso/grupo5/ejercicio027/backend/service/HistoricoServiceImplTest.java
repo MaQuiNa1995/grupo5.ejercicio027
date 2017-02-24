@@ -1,11 +1,11 @@
 package es.cic.curso.grupo5.ejercicio027.backend.service;
 
+import static org.junit.Assert.*;
+
 import java.util.List;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -19,7 +19,8 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.transaction.annotation.Transactional;
 
 import es.cic.curso.grupo5.ejercicio027.backend.service.HistoricoService;
-import es.cic.curso.grupo5.ejercicio027.backend.repository.Usuario;
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico;
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:es/cic/curso/grupo5.ejercicio027/applicationContext.xml" })
@@ -31,7 +32,12 @@ public class HistoricoServiceImplTest {
 	protected EntityManager entityManager;
 	
 	@Autowired
-	private UsuarioService usuarioService;
+	private HistoricoService historicoService;
+
+	private Historico historico1;
+	private Historico historico2;
+	private Historico historico3;
+	
 
 	private Usuario usuario1;
 	private Usuario usuario2;
@@ -45,36 +51,37 @@ public class HistoricoServiceImplTest {
 
 	@Test
 	public void testAniadirUuario() {
-		Usuario usuarioCreado = usuarioService.aniadirUsuario(usuario);
-		assertNotNull(usuarioCreado.getId());
+		Historico historicoCreado = historicoService.aniadirHistorico(historico2);
+		assertNotNull(historicoCreado.getId());
 	}
 
 	@Test
 	public void testModificarUsuario() {
-		
-		usuarioCreado.setNombre("Jose");
-		usuarioCreado.ModificarUsuario();
-		assertEquals();
+		historico2.setOperacion("Actualizar");
+		historicoService.modificarHistorico(historico2);
+		assertEquals(historico2.getOperacion(), "Actualizar");
 	}
 
 	@Test
-	public void testBorrarClaseDummie() {
-		Long idUsuario = 0L;
-		usuarioService.borrarUsuario(idUsuario);
-		List<Usuario> listaUsuario = usuarioService.listarUsuario();
-		assertEquals(listaUsuario.size(), 3);
+	public void testBorrarUsuario() {
+		Historico historicoABorrar = new Historico("abrir","24/02/2017 12:55", usuario1);
+		historicoService.aniadirHistorico(historicoABorrar);
+		historicoService.borrarHistorico(historicoABorrar.getId());
+		List<Historico> listaHistorico = historicoService.listarHistorico();
+		assertEquals(listaHistorico.size(), 3);
 	}
 
 	@Test
 	public void testListarClaseDummie() {
-		List<Usuario> listaUsuario = usuarioService.listarUsuario();
-		for (Usuario u : listaUsuario) {
+		List<Historico> listaHistorico = historicoService.listarHistorico();
+		for (Historico u : listaHistorico) {
 			assertNotNull(u.getId());
 		}
 
 	}
 	
 	private void inicializaBaseDeDatos() {
+		
 		usuario1 = new Usuario("juan", "juan", "administrador", "juan@hotmail.com");
 		usuario2 = new Usuario("pepe", "pepe", "invitado", "pepe@hotmail.com");
 		usuario3 = new Usuario("pedro", "pedro", "inivitado", "pedro@hotmail.com");
@@ -82,6 +89,14 @@ public class HistoricoServiceImplTest {
 		entityManager.persist(usuario1);
 		entityManager.persist(usuario2);
 		entityManager.persist(usuario3);
+		
+		historico1 = new Historico("abrir","24/02/2017 12:55", usuario1);
+		historico2 = new Historico("cerrar","25/02/2017 12:55", usuario2);
+		historico3 = new Historico("modificar","26/02/2017 12:55", usuario3);
+
+		entityManager.persist(historico1);
+		entityManager.persist(historico2);
+		entityManager.persist(historico3);
 
 	}
 

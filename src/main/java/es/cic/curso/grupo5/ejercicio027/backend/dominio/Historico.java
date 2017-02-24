@@ -8,10 +8,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
 import es.cic.curso.grupo5.ejercicio027.backend.repository.Identificable;
 
 @Entity
+@Table(name="HISTORICO")
 public class Historico implements Identificable<Long>{
 
 	/**

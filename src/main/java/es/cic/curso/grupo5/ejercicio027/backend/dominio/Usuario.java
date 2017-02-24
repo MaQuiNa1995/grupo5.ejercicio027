@@ -5,10 +5,12 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 
 import es.cic.curso.grupo5.ejercicio027.backend.repository.Identificable;
 
 @Entity
+@Table(name="USUARIO")
 public class Usuario implements Identificable<Long>{
 
 	/**

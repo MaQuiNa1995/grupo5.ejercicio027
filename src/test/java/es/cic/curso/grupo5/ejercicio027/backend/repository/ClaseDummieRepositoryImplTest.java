@@ -73,37 +73,9 @@ public class ClaseDummieRepositoryImplTest extends AbstractRepositoryImplTest<Lo
         if (t1 == null || t2 == null) {
             throw new UnsupportedOperationException("No puedo comparar nulos");
         }
-        /**
-        Esto es porque son Strings para numeros y tal usar el metodo comentado
-        */
         if (!t1.getPalabra().equals(t2.getPalabra())) {
             return false;
         }
         return true;
     }
-    //	@Override
-//	public boolean sonDatosIguales(Anime t1, Anime t2) {
-//		if (t1 == null || t2 == null) {
-//			throw new UnsupportedOperationException("No puedo comparar nulos");
-//		}
-//		if (t1.getNombre() != t2.getNombre()) {
-//			return false;
-//		}
-//		if (t1.getGenero() != t2.getGenero()) {
-//			return false;
-//		}
-//		if (t1.getCapitulos() != t2.getCapitulos()) {
-//			return false;
-//		}
-//		if (t1.getTemporadas() != t2.getTemporadas()) {
-//			return false;
-//		}
-//		if (t1.getValoracion() != t2.getValoracion()) {
-//			return false;
-//		}
-//		if (t1.getEnEmision() != t2.getEnEmision()) {
-//			return false;
-//		}
-//		return true;
-//	}
 }

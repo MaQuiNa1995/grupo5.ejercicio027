@@ -28,7 +28,7 @@
         <addForeignKeyConstraint 
             constraintName="fk_usuario_historico" 
             referencedTableName="HISTORICO" 
-            baseColumnNames="id" 
+            baseColumnNames="idusuario" 
             baseTableName="USUARIO" 
             referencedColumnNames="id"/> 
         

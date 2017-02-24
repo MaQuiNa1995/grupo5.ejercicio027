@@ -10,7 +10,7 @@ import javax.persistence.Table;
 import es.cic.curso.grupo5.ejercicio027.backend.repository.Identificable;
 
 @Entity
-@Table(name="USUARIO")
+@Table (name="USUARIO")
 public class Usuario implements Identificable<Long>{
 
 	/**

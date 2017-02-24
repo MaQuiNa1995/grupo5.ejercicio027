@@ -19,6 +19,7 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.transaction.annotation.Transactional;
 
 import es.cic.curso.grupo5.ejercicio027.backend.service.HistoricoService;
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico;
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -49,20 +50,20 @@ public class HistoricoServiceImplTest {
 	}
 
 	@Test
-	public void testAniadirUuario() {
+	public void testAniadirHistorico() {
 		Historico historicoCreado = historicoService.aniadirHistorico(historico2);
 		assertNotNull(historicoCreado.getId());
 	}
 
 	@Test
-	public void testModificarUsuario() {
+	public void testModificarHistorico() {
 		historico2.setOperacion("Actualizar");
 		historicoService.modificarHistorico(historico2);
 		assertEquals(historico2.getOperacion(), "Actualizar");
 	}
 
 	@Test
-	public void testBorrarUsuario() {
+	public void testBorrarHistorico() {
 		Historico historicoABorrar = new Historico("abrir","24/02/2017 12:55", usuario1);
 		historicoService.aniadirHistorico(historicoABorrar);
 		historicoService.borrarHistorico(historicoABorrar.getId());
@@ -71,7 +72,7 @@ public class HistoricoServiceImplTest {
 	}
 
 	@Test
-	public void testListarClaseDummie() {
+	public void testListarHistorico() {
 		List<Historico> listaHistorico = historicoService.listarHistorico();
 		for (Historico u : listaHistorico) {
 			assertNotNull(u.getId());

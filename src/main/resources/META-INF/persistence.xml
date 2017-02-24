@@ -6,12 +6,13 @@
              version="2.0">
     <persistence-unit name="persistenceUnitHSQL" transaction-type="RESOURCE_LOCAL">
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
+        <class>es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario</class>
+        <class>es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico</class>
         <!--
         	Ruta de las clases que va en el Dominio
         	
         	<class>es.cic.curso.curso18.ejercicio026.dominio.</class>
         -->
-        <class>es.cic.curso.grupo5.ejercicio027.backend.dominio.Dummie</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="org.hsqldb.jdbcDriver"/>

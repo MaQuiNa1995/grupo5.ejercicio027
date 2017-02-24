@@ -20,7 +20,7 @@ public class Usuario implements Identificable<Long>{
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
 	
-	@Column(name ="tipo")
+	@Column(name ="nombre")
     String nombre;
 	
 	@Column(name ="password")

@@ -29,7 +29,7 @@ public class Historico implements Identificable<Long>{
 	@Column(name ="hora")
 	String hora;
 	
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "usuario")
     @ManyToOne(fetch = FetchType.LAZY)
     private Usuario usuario;
     

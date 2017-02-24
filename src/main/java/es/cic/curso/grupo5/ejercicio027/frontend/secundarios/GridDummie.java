@@ -12,7 +12,7 @@ import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.VerticalLayout;
 
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Dummie;
-import es.cic.curso.grupo5.ejercicio027.backend.service.ClaseDummieService;
+import es.cic.curso.grupo5.ejercicio027.backend.service.HistoricoService;
 
 public class GridDummie extends VerticalLayout {
 
@@ -24,11 +24,11 @@ public class GridDummie extends VerticalLayout {
 	Dummie dummie;
 	Grid gridDummies;
 	
-	private ClaseDummieService dummieService;
+	private HistoricoService dummieService;
 	List<Dummie> listaDummies;
 
 	public GridDummie() {
-		dummieService = ContextLoader.getCurrentWebApplicationContext().getBean(ClaseDummieService.class);
+		dummieService = ContextLoader.getCurrentWebApplicationContext().getBean(HistoricoService.class);
 		
 		listaDummies = new ArrayList<>();
 		gridDummies = new Grid();

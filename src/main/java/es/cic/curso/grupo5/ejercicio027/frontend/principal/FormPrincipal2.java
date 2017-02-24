@@ -18,7 +18,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Dummie;
-import es.cic.curso.grupo5.ejercicio027.backend.service.ClaseDummieService;
+import es.cic.curso.grupo5.ejercicio027.backend.service.HistoricoService;
 import es.cic.curso.grupo5.ejercicio027.frontend.secundarios.DummieForm;
 
 @Theme("mytheme")
@@ -34,7 +34,7 @@ public class FormPrincipal2 extends UI {
 	
 
 	@Autowired
-	private ClaseDummieService peliculaService;
+	private HistoricoService peliculaService;
 	
 	private Button accionAniadir;
 	@Override

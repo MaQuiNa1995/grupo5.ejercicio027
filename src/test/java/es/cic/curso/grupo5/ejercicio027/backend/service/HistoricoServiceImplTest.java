@@ -18,55 +18,72 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.cic.curso.grupo5.ejercicio027.backend.dominio.Dummie;
-import es.cic.curso.grupo5.ejercicio027.backend.service.ClaseDummieService;
+import es.cic.curso.grupo5.ejercicio027.backend.service.HistoricoService;
+import es.cic.curso.grupo5.ejercicio027.backend.repository.Usuario;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:es/cic/curso/grupo5.ejercicio027/applicationContext.xml" })
 @TestExecutionListeners({ DependencyInjectionTestExecutionListener.class, TransactionalTestExecutionListener.class })
 @Transactional
-public class ClaseDummieServiceImplTest {
+public class HistoricoServiceImplTest {
 
-        @PersistenceContext
+    @PersistenceContext
 	protected EntityManager entityManager;
+	
 	@Autowired
-	private ClaseDummieService sut;
+	private UsuarioService usuarioService;
 
+	private Usuario usuario1;
+	private Usuario usuario2;
+	private Usuario usuario3;
+	
+	
 	@Before
 	public void setUp() throws Exception {
-
+		inicializaBaseDeDatos();
 	}
 
 	@Test
-	public void testCrearClaseDummie() {
-		Long idClaseDummie = sut.aniadirClaseDummie("PatatasFritas",true,5,100,5f);
-		assertNotNull(idClaseDummie);
+	public void testAniadirUuario() {
+		Usuario usuarioCreado = usuarioService.aniadirUsuario(usuario);
+		assertNotNull(usuarioCreado.getId());
 	}
 
 	@Test
-	public void testEditarClaseDummie() {
-		Long idClaseDummie = sut.aniadirClaseDummie("PatatasBrabas",true,5,100,5f);
-		Dummie sala = sut.obtenerClaseDummie(idClaseDummie);
-		sala.setPalabra("PatatasBrabas");
-		Dummie salaMod = sut.obtenerClaseDummie(idClaseDummie);
-		assertTrue(sala.getPalabra().equals(salaMod.getPalabra()));
+	public void testModificarUsuario() {
+		
+		usuarioCreado.setNombre("Jose");
+		usuarioCreado.ModificarUsuario();
+		assertEquals();
 	}
 
 	@Test
 	public void testBorrarClaseDummie() {
-		Long idClaseDummie = sut.aniadirClaseDummie("PatatasFritas",true,5,100,5f);
-		sut.borrarClaseDummie(idClaseDummie);
-		List<Dummie> salas = sut.obtenerClaseDummies();
-		assertTrue(salas.isEmpty());
+		Long idUsuario = 0L;
+		usuarioService.borrarUsuario(idUsuario);
+		List<Usuario> listaUsuario = usuarioService.listarUsuario();
+		assertEquals(listaUsuario.size(), 3);
 	}
 
 	@Test
 	public void testListarClaseDummie() {
-		List<Dummie> salasLista = sut.obtenerClaseDummies();
-		for (Dummie salaSacada : salasLista) {
-			assertNotNull(salaSacada.getId());
+		List<Usuario> listaUsuario = usuarioService.listarUsuario();
+		for (Usuario u : listaUsuario) {
+			assertNotNull(u.getId());
 		}
 
 	}
+	
+	private void inicializaBaseDeDatos() {
+		usuario1 = new Usuario("juan", "juan", "administrador", "juan@hotmail.com");
+		usuario2 = new Usuario("pepe", "pepe", "invitado", "pepe@hotmail.com");
+		usuario3 = new Usuario("pedro", "pedro", "inivitado", "pedro@hotmail.com");
+
+		entityManager.persist(usuario1);
+		entityManager.persist(usuario2);
+		entityManager.persist(usuario3);
+
+	}
+
 
 }

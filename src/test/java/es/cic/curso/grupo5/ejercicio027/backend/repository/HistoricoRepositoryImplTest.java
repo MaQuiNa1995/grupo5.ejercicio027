@@ -7,6 +7,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico;
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 import es.cic.curso.grupo5.ejercicio027.backend.repository.HistoricoRepository;
 import es.cic.curso.grupo5.ejercicio027.backend.repository.IRepository;
 
@@ -29,19 +30,27 @@ public class HistoricoRepositoryImplTest extends AbstractRepositoryImplTest<Long
     @Override
     public Historico getInstanceDeTParaNuevo() {
     	
+    	Usuario usuario = new Usuario("Christian","curso18","Admin","maquina1995@gmail.com");
+    	
+    	
         Historico claseHistorico = new Historico();
         claseHistorico.setOperacion("Tirar la basura");
         claseHistorico.setHora("16:56");
+        
+        claseHistorico.setUsuario(usuario);
 
         return claseHistorico;
     }
 
     @Override
     public Historico getInstanceDeTParaLectura() {
+    	Usuario usuario = new Usuario("Christian","curso18","Admin","maquina1995@gmail.com");
+    	
     	
         Historico claseHistorico = new Historico();
-        claseHistorico.getOperacion();
-        claseHistorico.getHora();
+        claseHistorico.setOperacion("Tirar la basura");
+        claseHistorico.setHora("16:56");
+        claseHistorico.setUsuario(usuario);
 
         return claseHistorico;
     }

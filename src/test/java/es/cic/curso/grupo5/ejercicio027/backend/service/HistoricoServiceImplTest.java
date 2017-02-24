@@ -19,7 +19,7 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.transaction.annotation.Transactional;
 
 import es.cic.curso.grupo5.ejercicio027.backend.service.HistoricoService;
-import es.cic.curso.grupo5.ejercicio027.backend.repository.Usuario;
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:es/cic/curso/grupo5.ejercicio027/applicationContext.xml" })

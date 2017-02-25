@@ -127,7 +127,7 @@ public class HistoricoForm extends FormLayout {
 		});
 				
 		confirmar.addClickListener(e->{
-				if(operacion.getValue()==null||horas.getValue()==null|| minutos.getValue()==null || nombreUser.getValue()==null ){	
+			if(operacion.getValue()==null||horas.getValue()==null|| minutos.getValue()==null || nombreUser.getValue()==null ){	
 				Notification sample = new Notification("Rellene todos los campos");
 				mostrarNotificacion(sample);	
 			}
@@ -138,8 +138,17 @@ public class HistoricoForm extends FormLayout {
 					}
 				}
 				historico.setHora(horas.getValue() +":"+minutos.getValue());
-				Notification sample = new Notification(nombreUser.getValue()+" realizo la operacion de: "+operacion.getValue());
-				mostrarNotificacion(sample);
+
+				// Christian: Intento de linkar DTOal grid
+//				Usuario usuario = new Usuario(nombreUser.getValue().toString(), "", "Administrador", "");
+//				Historico historico = new Historico(operacion.getValue().toString(),
+//						horas.getValue().toString()+":"+minutos.getValue().toString(),usuario);
+//				Da error porque el container de historico no tiene un campo nombre
+				
+				Notification notificacionOperacion = new Notification(nombreUser.getValue()+""
+						+ "realizo la operacion de: "+operacion.getValue());
+				
+				mostrarNotificacion(notificacionOperacion);
 				nombreUser.clear();
 				horas.clear();
 				minutos.clear();
@@ -164,9 +173,9 @@ public class HistoricoForm extends FormLayout {
 
 		setHistorico(null);	
 	}
-	private void mostrarNotificacion(Notification sample2) {
-		sample2.setDelayMsec(2000);
-		sample2.show(Page.getCurrent());
+	private void mostrarNotificacion(Notification notificacion) {
+		notificacion.setDelayMsec(2000);
+		notificacion.show(Page.getCurrent());
 	}
 	public void setHistorico(Historico historico) {
 		this.setVisible(historico != null);

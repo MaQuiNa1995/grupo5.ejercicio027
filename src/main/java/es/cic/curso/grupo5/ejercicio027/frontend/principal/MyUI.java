@@ -37,7 +37,9 @@ public class MyUI extends UI {
 	protected void init(VaadinRequest vaadinRequest) {
 		
 		historicoService = ContextLoader.getCurrentWebApplicationContext().getBean(HistoricoService.class);	
-		usuarioService = ContextLoader.getCurrentWebApplicationContext().getBean(UsuarioService.class);	
+		usuarioService = ContextLoader.getCurrentWebApplicationContext().getBean(UsuarioService.class);
+		
+		
 		
 		//TODO generar bbdd meterlo en el service=============================================================
 		Usuario usuario1 = new Usuario("Juan González del Olmo", "juan", "administrador", "juan@hotmail.com");
@@ -72,16 +74,21 @@ public class MyUI extends UI {
 		gridHistorico = new Grid();
 		
 		gridHistorico.setWidth(1000, Unit.PIXELS);
-		gridHistorico.setColumns("id","nombre","rol","operacion","hora");
+		
+		//gridHistorico.sort("nombre");
+		
+		gridHistorico.setColumns("nombre","rol","operacion","hora");
 		gridHistorico.addSelectionListener(e -> 
 		{		
 			historico = null;
 			if (!e.getSelected().isEmpty() ) {
+				
 				historico = (Historico) e.getSelected().iterator().next();
 				detalleHistorico.setVisible(true);
 				aniadirHistorico.setVisible(false);
 				
 			} else{
+				
 			  detalleHistorico.setVisible(false);
 			  aniadirHistorico.setVisible(true);
 				

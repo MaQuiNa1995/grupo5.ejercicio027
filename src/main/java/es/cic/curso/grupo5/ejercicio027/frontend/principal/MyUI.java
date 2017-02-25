@@ -1,11 +1,7 @@
 package es.cic.curso.grupo5.ejercicio027.frontend.principal;
 
-import java.util.List;
-
 import javax.servlet.annotation.WebServlet;
-
 import org.springframework.web.context.ContextLoader;
-
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.data.util.BeanItemContainer;
@@ -20,7 +16,6 @@ import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Grid.SelectionMode;
-
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico;
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 import es.cic.curso.grupo5.ejercicio027.backend.service.HistoricoService;
@@ -34,7 +29,7 @@ public class MyUI extends UI {
 	private NativeButton aniadirHistorico;
 	private Grid gridHistorico;
 	private HistoricoForm detalleHistorico;
-	private Historico historico;
+	private Historico historico; // se va a usar para eliminar y modificar
 	private HistoricoService historicoService;
 	private UsuarioService usuarioService;
 
@@ -44,22 +39,26 @@ public class MyUI extends UI {
 		historicoService = ContextLoader.getCurrentWebApplicationContext().getBean(HistoricoService.class);	
 		usuarioService = ContextLoader.getCurrentWebApplicationContext().getBean(UsuarioService.class);	
 		
-		//TODO generar bbdd meterno en el service=============================================================
+		//TODO generar bbdd meterlo en el service=============================================================
 		Usuario usuario1 = new Usuario("Juan González del Olmo", "juan", "administrador", "juan@hotmail.com");
 		Usuario usuario2 = new Usuario("Jose Giménez Sánchez", "pepe", "invitado", "pepe@hotmail.com");
 		Usuario usuario3 = new Usuario("Pedro de la torre García", "pedro", "supervisor", "pedro@hotmail.com");
+		Usuario usuario4 = new Usuario("María Suarez Fernandez", "mery", "editor", "laMery@hotmail.com");
 		
 		usuarioService.aniadirUsuario(usuario1);
 		usuarioService.aniadirUsuario(usuario2);
 		usuarioService.aniadirUsuario(usuario3);
+		usuarioService.aniadirUsuario(usuario4);
 		//======================================================================================================
 		final VerticalLayout layout = new VerticalLayout();
-		creaMargenes(layout);
-		final VerticalLayout hlHistorico = new VerticalLayout();
-		creaMargenes(hlHistorico);
+		layout.setMargin(true);
+		layout.setSpacing(true);
+		layout.setWidth("100%");
+		final HorizontalLayout hlHistorico = new HorizontalLayout();
+		hlHistorico.setMargin(true);
+		hlHistorico.setSpacing(true);
 		
 		Label titulo = new Label("CONTROL DE ACCESOS");
-		
 		pestania = new TabSheet();
 		pestania.setHeight(100.0f, Unit.PERCENTAGE);
 		pestania.addTab(hlHistorico, "HISTORICO");
@@ -67,22 +66,35 @@ public class MyUI extends UI {
 		HorizontalLayout hlGrids= new HorizontalLayout();
 		hlGrids.setSpacing(true);
 		hlGrids.setSizeFull();
-		
-		
+				
 		aniadirHistorico = new NativeButton("Añadir Registro");
 		aniadirHistorico.setIcon(FontAwesome.PLUS);
-		detalleHistorico = new HistoricoForm(this);
-		detalleHistorico.setVisible(false);
+		gridHistorico = new Grid();
 		
-		aniadirHistorico.addClickListener(e->{
-			
+		gridHistorico.setWidth(1000, Unit.PIXELS);
+		gridHistorico.setColumns("id","nombre","rol","operacion","hora");
+		gridHistorico.addSelectionListener(e -> 
+		{		
+			historico = null;
+			if (!e.getSelected().isEmpty() ) {
+				historico = (Historico) e.getSelected().iterator().next();
+				detalleHistorico.setVisible(true);
+				aniadirHistorico.setVisible(false);
+				
+			} else{
+			  detalleHistorico.setVisible(false);
+			  aniadirHistorico.setVisible(true);
+				
+			}
+			detalleHistorico.setHistorico(historico);	
+		});
+		detalleHistorico = new HistoricoForm(this);
+
+		
+		aniadirHistorico.addClickListener(e->{	
 			aniadirHistorico.setVisible(false);
 			aniadirHistorico();
 		});
-		
-		gridHistorico = new Grid();
-		gridHistorico.setSizeFull();
-		gridHistorico.setColumns("id","nombre","rol","operacion","hora");
 	
 		hlHistorico.addComponents(gridHistorico,aniadirHistorico,detalleHistorico);
 		hlGrids.addComponents(pestania);
@@ -91,10 +103,9 @@ public class MyUI extends UI {
 		
 		cargaGridHistorico(null);
 		gridHistorico.setFrozenColumnCount(1);
-		gridHistorico.setSelectionMode(SelectionMode.SINGLE);
-				
+		gridHistorico.setSelectionMode(SelectionMode.SINGLE);				
 	}
-	
+	//================================================================================================
 	private void aniadirHistorico() {	
 		
 		detalleHistorico.setVisible(true);		
@@ -104,16 +115,13 @@ public class MyUI extends UI {
 				new BeanItemContainer<>(Historico.class, historicoService.listarHistorico())
 				);
 	}
-	private void creaMargenes(final VerticalLayout lay) {
-		lay.setMargin(true);
-		lay.setSpacing(true);
-		lay.setWidth("100%");
-	}
 	public void cargaGridHistorico(Historico historico) { 
 		aniadirHistorico.setVisible(true);
+		detalleHistorico.setVisible(false);
 		if (historico != null){
 			historicoService.modificarHistorico(historico);
 		}		
+		//TODO pasarle la lista ordenada por hora
 		gridHistorico.setContainerDataSource(
 				new BeanItemContainer<>(Historico.class, historicoService.listarHistorico())
 				);
@@ -122,9 +130,6 @@ public class MyUI extends UI {
 	   @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
 	    @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
 	    public static class MyUIServlet extends VaadinServlet {
-
-		private static final long serialVersionUID = -692740140427143858L;
-	 
-	 
+		private static final long serialVersionUID = -692740140427143858L;	 
 	   }
 }

@@ -1,0 +1,146 @@
+package es.cic.curso.grupo5.ejercicio027.frontend.secundarios;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.web.context.ContextLoader;
+
+import com.vaadin.data.fieldgroup.BeanFieldGroup;
+import com.vaadin.data.fieldgroup.PropertyId;
+import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Page;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.NativeButton;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.TextField;
+
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
+import es.cic.curso.grupo5.ejercicio027.backend.service.UsuarioService;
+
+public class UsuarioForm extends FormLayout {
+	 
+	private static final long serialVersionUID = -8212581707579739708L;
+	private UsuarioService usuarioService;
+
+	@SuppressWarnings("unused")
+	
+
+	@PropertyId("nombre")
+	private TextField nombre;
+	@PropertyId("password")
+	protected TextField password;
+	@PropertyId("email")
+	private TextField email;	
+	@PropertyId("rol")
+	protected ComboBox roles;
+	
+	private NativeButton confirmar;
+	private NativeButton cancelar;
+	
+	private Usuario usuario;
+	
+	private GestionUsuarios padre;
+
+	
+	public UsuarioForm(GestionUsuarios padre) {
+		this.padre = padre;
+
+		usuarioService = ContextLoader.getCurrentWebApplicationContext().getBean(UsuarioService.class);	
+
+		final HorizontalLayout horizontal1 = new HorizontalLayout();
+		final HorizontalLayout horizontal2 = new HorizontalLayout();
+		final HorizontalLayout horizontal3 = new HorizontalLayout();
+		final HorizontalLayout horizontal4 = new HorizontalLayout();
+		horizontal1.setSpacing(true);
+		horizontal2.setSpacing(true);
+		horizontal3.setSpacing(true);
+
+		List<String> listaRoles = new ArrayList<>();
+		listaRoles.add("administrador");
+		listaRoles.add("supervisor");		
+		listaRoles.add("editor");		
+		listaRoles.add("invitado");
+
+		
+		
+		nombre = new TextField("Nombre");
+		nombre.setImmediate(true);
+		nombre.setWidth(300, Unit.PIXELS);
+		
+		password = new TextField("Password");
+		password.setImmediate(true);
+		password.setWidth(300, Unit.PIXELS);
+		
+		email = new TextField("Email");
+		email.setImmediate(true);
+		email.setWidth(300, Unit.PIXELS);
+		
+		roles = new ComboBox("Rol",listaRoles);
+		roles.setNullSelectionAllowed(false);
+		roles.select(1);
+		roles.setImmediate(true);
+		roles.setWidth(300, Unit.PIXELS);
+		
+	
+		
+		confirmar = new NativeButton("Registrar");
+		confirmar.setIcon(FontAwesome.SAVE);
+
+		cancelar = new NativeButton("Cancelar");
+		cancelar.setIcon(FontAwesome.REPLY);
+	 	
+		
+				
+		confirmar.addClickListener(e->{
+			/*if(roles.getValue()==null||nombre.getValue()==null|| password.getValue()==null || email.getValue()==null ){	
+				Notification sample = new Notification("Rellene todos los campos");
+				mostrarNotificacion(sample);	
+			}
+				
+				Notification notificacionOperacion = 
+						new Notification("El usuario : "+ nombre.getValue()+" ha sido dado de alta correctamente");
+				
+				mostrarNotificacion(notificacionOperacion);
+				nombre.clear();
+				password.clear();
+				email.clear();
+			*/
+			padre.cargaGridUsuarios(usuario);
+			
+		});
+
+		cancelar.addClickListener(e->{
+
+			nombre.clear();
+			password.clear();
+			email.clear();
+		padre.cargaGridUsuarios(null);
+
+		});
+
+		horizontal1.addComponents(nombre, password);
+		horizontal2.addComponents(roles);
+		horizontal3.addComponents(email);
+		addComponents(horizontal1,horizontal2,horizontal3,horizontal4,confirmar,cancelar);	
+
+		setUsuario(null);	
+	}
+	private void mostrarNotificacion(Notification notificacion) {
+		notificacion.setDelayMsec(2000);
+		notificacion.show(Page.getCurrent());
+	}
+	public void setUsuario(Usuario usuario) {
+		this.setVisible(usuario != null);
+		this.usuario = usuario;
+
+		if (usuario != null) {
+			BeanFieldGroup.bindFieldsUnbuffered(usuario, this);
+		} else {
+			BeanFieldGroup.bindFieldsUnbuffered(new Usuario(), this);
+		}
+	}
+	
+	
+}

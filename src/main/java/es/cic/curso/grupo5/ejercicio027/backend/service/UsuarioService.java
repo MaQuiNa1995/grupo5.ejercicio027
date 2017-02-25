@@ -16,5 +16,7 @@ public interface UsuarioService {
 
     List<Usuario> listarUsuario();
 
+	void generaBBDD();
+
 	
 }

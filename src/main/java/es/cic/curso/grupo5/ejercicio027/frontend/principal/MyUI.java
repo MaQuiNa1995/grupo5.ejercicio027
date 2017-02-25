@@ -1,25 +1,28 @@
 package es.cic.curso.grupo5.ejercicio027.frontend.principal;
 
 import javax.servlet.annotation.WebServlet;
+
 import org.springframework.web.context.ContextLoader;
+
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.server.FontAwesome;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Grid.SelectionMode;
+
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico;
-import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 import es.cic.curso.grupo5.ejercicio027.backend.service.HistoricoService;
 import es.cic.curso.grupo5.ejercicio027.backend.service.UsuarioService;
+import es.cic.curso.grupo5.ejercicio027.frontend.secundarios.GestionUsuarios;
 import es.cic.curso.grupo5.ejercicio027.frontend.secundarios.HistoricoForm;
 
 @Theme("mytheme")
@@ -39,18 +42,6 @@ public class MyUI extends UI {
 		historicoService = ContextLoader.getCurrentWebApplicationContext().getBean(HistoricoService.class);	
 		usuarioService = ContextLoader.getCurrentWebApplicationContext().getBean(UsuarioService.class);
 		
-		
-		
-		//TODO generar bbdd meterlo en el service=============================================================
-		Usuario usuario1 = new Usuario("Juan González del Olmo", "juan", "administrador", "juan@hotmail.com");
-		Usuario usuario2 = new Usuario("Jose Giménez Sánchez", "pepe", "invitado", "pepe@hotmail.com");
-		Usuario usuario3 = new Usuario("Pedro de la torre García", "pedro", "supervisor", "pedro@hotmail.com");
-		Usuario usuario4 = new Usuario("María Suarez Fernandez", "mery", "editor", "laMery@hotmail.com");
-		
-		usuarioService.aniadirUsuario(usuario1);
-		usuarioService.aniadirUsuario(usuario2);
-		usuarioService.aniadirUsuario(usuario3);
-		usuarioService.aniadirUsuario(usuario4);
 		//======================================================================================================
 		final VerticalLayout layout = new VerticalLayout();
 		layout.setMargin(true);
@@ -59,11 +50,15 @@ public class MyUI extends UI {
 		final HorizontalLayout hlHistorico = new HorizontalLayout();
 		hlHistorico.setMargin(true);
 		hlHistorico.setSpacing(true);
+		final HorizontalLayout hlUsuarios = new GestionUsuarios(this);
+		hlUsuarios.setMargin(true);
+		hlUsuarios.setSpacing(true);
 		
 		Label titulo = new Label("CONTROL DE ACCESOS");
 		pestania = new TabSheet();
 		pestania.setHeight(100.0f, Unit.PERCENTAGE);
 		pestania.addTab(hlHistorico, "HISTORICO");
+		pestania.addTab(hlUsuarios, "USUARIOS");
 		
 		HorizontalLayout hlGrids= new HorizontalLayout();
 		hlGrids.setSpacing(true);
@@ -134,6 +129,8 @@ public class MyUI extends UI {
 				);
 		detalleHistorico.setHistorico(null);
 	}
+	
+	
 	   @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
 	    @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)
 	    public static class MyUIServlet extends VaadinServlet {

@@ -1,6 +1,7 @@
 package es.cic.curso.grupo5.ejercicio027.backend.service;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,6 +40,20 @@ public class UsuarioServiceImpl implements UsuarioService{
     @Override
     public List<Usuario> listarUsuario() {
         return usuarioRepository.list();
+    }
+    
+    @Override
+    public void generaBBDD(){
+    	
+    	Usuario usuario1 = new Usuario("Juan González del Olmo", "juan", "administrador", "juan@hotmail.com");
+		Usuario usuario2 = new Usuario("Jose Giménez Sánchez", "pepe", "invitado", "pepe@hotmail.com");
+		Usuario usuario3 = new Usuario("Pedro de la torre García", "pedro", "supervisor", "pedro@hotmail.com");
+		Usuario usuario4 = new Usuario("María Suarez Fernandez", "mery", "editor", "laMery@hotmail.com");
+		
+		usuarioRepository.add(usuario1);
+		usuarioRepository.add(usuario2);
+		usuarioRepository.add(usuario3);
+		usuarioRepository.add(usuario4);
     }
     
 }

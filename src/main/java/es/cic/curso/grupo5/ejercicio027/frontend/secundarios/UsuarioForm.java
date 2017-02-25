@@ -2,9 +2,6 @@ package es.cic.curso.grupo5.ejercicio027.frontend.secundarios;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.web.context.ContextLoader;
-
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.server.FontAwesome;
@@ -15,17 +12,11 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
-
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
-import es.cic.curso.grupo5.ejercicio027.backend.service.UsuarioService;
 
 public class UsuarioForm extends FormLayout {
 	 
 	private static final long serialVersionUID = -8212581707579739708L;
-	private UsuarioService usuarioService;
-
-	@SuppressWarnings("unused")
-	
 
 	@PropertyId("nombre")
 	private TextField nombre;
@@ -40,14 +31,12 @@ public class UsuarioForm extends FormLayout {
 	private NativeButton cancelar;
 	
 	private Usuario usuario;
-	
-	private GestionUsuarios padre;
 
+	@SuppressWarnings("unused")
+	private GestionUsuarios padre;
 	
 	public UsuarioForm(GestionUsuarios padre) {
 		this.padre = padre;
-
-		usuarioService = ContextLoader.getCurrentWebApplicationContext().getBean(UsuarioService.class);	
 
 		final HorizontalLayout horizontal1 = new HorizontalLayout();
 		final HorizontalLayout horizontal2 = new HorizontalLayout();
@@ -62,19 +51,14 @@ public class UsuarioForm extends FormLayout {
 		listaRoles.add("supervisor");		
 		listaRoles.add("editor");		
 		listaRoles.add("invitado");
-
-		
-		
+			
 		nombre = new TextField("Nombre");
-		nombre.setImmediate(true);
 		nombre.setWidth(300, Unit.PIXELS);
 		
 		password = new TextField("Password");
-		password.setImmediate(true);
 		password.setWidth(300, Unit.PIXELS);
 		
 		email = new TextField("Email");
-		email.setImmediate(true);
 		email.setWidth(300, Unit.PIXELS);
 		
 		roles = new ComboBox("Rol",listaRoles);
@@ -83,32 +67,25 @@ public class UsuarioForm extends FormLayout {
 		roles.setImmediate(true);
 		roles.setWidth(300, Unit.PIXELS);
 		
-	
-		
-		confirmar = new NativeButton("Registrar");
+		confirmar = new NativeButton("Registrar/Actualizar");
 		confirmar.setIcon(FontAwesome.SAVE);
 
 		cancelar = new NativeButton("Cancelar");
 		cancelar.setIcon(FontAwesome.REPLY);
-	 	
-		
-				
+	 					
 		confirmar.addClickListener(e->{
-			/*if(roles.getValue()==null||nombre.getValue()==null|| password.getValue()==null || email.getValue()==null ){	
+			if(roles.getValue()==null||nombre.getValue().equals("")|| password.getValue().equals("") || email.getValue().equals(""))
+			{	
 				Notification sample = new Notification("Rellene todos los campos");
 				mostrarNotificacion(sample);	
-			}
-				
+			}else{
 				Notification notificacionOperacion = 
-						new Notification("El usuario : "+ nombre.getValue()+" ha sido dado de alta correctamente");
+						new Notification("El usuario : "+ nombre.getValue()+" ha sido dado de alta / actualizado");
 				
 				mostrarNotificacion(notificacionOperacion);
-				nombre.clear();
-				password.clear();
-				email.clear();
-			*/
-			padre.cargaGridUsuarios(usuario);
-			
+				padre.cargaGridUsuarios(usuario);
+		
+			}
 		});
 
 		cancelar.addClickListener(e->{
@@ -141,6 +118,5 @@ public class UsuarioForm extends FormLayout {
 			BeanFieldGroup.bindFieldsUnbuffered(new Usuario(), this);
 		}
 	}
-	
-	
+		
 }

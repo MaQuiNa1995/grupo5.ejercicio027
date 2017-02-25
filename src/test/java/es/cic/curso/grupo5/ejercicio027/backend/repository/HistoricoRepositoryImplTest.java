@@ -20,22 +20,28 @@ public class HistoricoRepositoryImplTest extends AbstractRepositoryImplTest<Long
 
     @Autowired
     private HistoricoRepository sut;
+    
+    Usuario usuario,usuario2,usuario3;
 
     @Before
     public void setUp() throws Exception {
         super.setUp();
+        usuario = new Usuario("Christian","curso18","Admin","maquina1995@gmail.com");
+        em.persist(usuario);
+        usuario2 = new Usuario("Christian2","curso18","Admin","maquina1995@gmail.com");
+        em.persist(usuario2);
+        usuario3 = new Usuario("Christian3","curso18","Admin","maquina1995@gmail.com");
+        em.persist(usuario3);
     }
 
     @Override
     public Historico getInstanceDeTParaNuevo() {
     	
-    	Usuario usuario = new Usuario("Christian","curso18","Admin","maquina1995@gmail.com");
-    	em.persist(usuario);
-    	
         Historico claseHistorico = new Historico();
+        
+        
         claseHistorico.setOperacion("Tirar la basura");
         claseHistorico.setHora("16:56");
-        
         claseHistorico.setUsuario(usuario);
 
         return claseHistorico;
@@ -43,13 +49,12 @@ public class HistoricoRepositoryImplTest extends AbstractRepositoryImplTest<Long
 
     @Override
     public Historico getInstanceDeTParaLectura() {
-    	Usuario usuario = new Usuario("Christian","curso18","Admin","maquina1995@gmail.com");
-    	em.persist(usuario);
     	
         Historico claseHistorico = new Historico();
-        claseHistorico.setOperacion("Tirar la basura");
+        
+        claseHistorico.setOperacion("Tirar la basura 2");
         claseHistorico.setHora("16:56");
-        claseHistorico.setUsuario(usuario);
+        claseHistorico.setUsuario(usuario2);
 
         return claseHistorico;
     }
@@ -61,8 +66,14 @@ public class HistoricoRepositoryImplTest extends AbstractRepositoryImplTest<Long
 
     @Override
     public Historico getInstanceDeTParaModificar(Long clave) {
+    	
         Historico claseHistorico = getInstanceDeTParaLectura();
+        
         claseHistorico.setId(clave);
+        claseHistorico.setOperacion("Tirar la basura 3");
+        claseHistorico.setHora("16:56");
+        claseHistorico.setUsuario(usuario3);
+        
         return claseHistorico;
     }
 

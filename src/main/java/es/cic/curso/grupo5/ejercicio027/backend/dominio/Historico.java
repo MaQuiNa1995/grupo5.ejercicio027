@@ -32,7 +32,9 @@ public class Historico implements Identificable<Long>{
 	String hora;
 	
     @JoinColumn(name = "idusuario")
+ 
     @ManyToOne(fetch = FetchType.LAZY) //@ManyToOne(fetch = FetchType.EAGER)//modificado para probar sin dtos
+ 
     private Usuario usuario;
     
 	public Historico() {
@@ -122,8 +124,8 @@ public class Historico implements Identificable<Long>{
 			return false;
 		return true;
 	}
-	
-	
+ 
+		
 //	///modificacion javi
 //		public String getNombre(){
 //			return usuario.getNombre();
@@ -132,6 +134,8 @@ public class Historico implements Identificable<Long>{
 //			return usuario.getRol();
 //		}
 //		
+ 
+ 
 }
 	
 	

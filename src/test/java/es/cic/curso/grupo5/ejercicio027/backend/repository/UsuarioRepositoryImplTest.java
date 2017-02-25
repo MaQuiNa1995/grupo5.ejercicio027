@@ -78,9 +78,6 @@ public class UsuarioRepositoryImplTest extends AbstractRepositoryImplTest<Long, 
         if (t1 == null || t2 == null) {
             throw new UnsupportedOperationException("No puedo comparar nulos");
         }
-        if (!(t1.getId() == t2.getId())) {
-            return false;
-        }
         
 		if (!t1.getNombre().equals(t2.getNombre())) {
 			return false;

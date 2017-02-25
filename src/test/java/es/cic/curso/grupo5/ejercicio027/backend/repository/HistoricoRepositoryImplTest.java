@@ -87,10 +87,6 @@ public class HistoricoRepositoryImplTest extends AbstractRepositoryImplTest<Long
         if (t1 == null || t2 == null) {
             throw new UnsupportedOperationException("No puedo comparar nulos");
         }
-
-        if (!(t1.getId()==t2.getId())) {
-            return false;
-        }
         
         if (!t1.getOperacion().equals(t2.getOperacion())) {
             return false;

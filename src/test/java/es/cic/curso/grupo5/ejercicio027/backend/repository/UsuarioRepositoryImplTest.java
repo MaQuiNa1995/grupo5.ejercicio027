@@ -28,7 +28,9 @@ public class UsuarioRepositoryImplTest extends AbstractRepositoryImplTest<Long, 
 
     @Override
     public Usuario getInstanceDeTParaNuevo() {
+    	
         Usuario claseUsuario = new Usuario();
+        
         claseUsuario.setNombre("Christian");
         claseUsuario.setPassword("curso18");
         claseUsuario.setRol("Administrador");
@@ -41,6 +43,7 @@ public class UsuarioRepositoryImplTest extends AbstractRepositoryImplTest<Long, 
     public Usuario getInstanceDeTParaLectura() {
     	
         Usuario claseUsuario = new Usuario();
+        
         claseUsuario.setNombre("Christian");
         claseUsuario.setPassword("curso18");
         claseUsuario.setRol("Administrador");
@@ -59,6 +62,9 @@ public class UsuarioRepositoryImplTest extends AbstractRepositoryImplTest<Long, 
         Usuario claseUsuario = getInstanceDeTParaLectura();
         claseUsuario.setId(clave);
         claseUsuario.setNombre("Christian");
+        claseUsuario.setPassword("curso18");
+        claseUsuario.setRol("Administrador");
+        claseUsuario.setEmail("maquina1995@gmail.com");
         return claseUsuario;
     }
 
@@ -72,23 +78,20 @@ public class UsuarioRepositoryImplTest extends AbstractRepositoryImplTest<Long, 
         if (t1 == null || t2 == null) {
             throw new UnsupportedOperationException("No puedo comparar nulos");
         }
-        if (!(t1.getId() == t2.getId())) {
-            return false;
-        }
         
-		if (t1.getNombre().equals(t2.getNombre())) {
+		if (!t1.getNombre().equals(t2.getNombre())) {
 			return false;
 		}
 		
-		if (t1.getPassword().equals(t2.getPassword())) {
+		if (!t1.getPassword().equals(t2.getPassword())) {
 			return false;
 		}
 		
-		if (t1.getRol().equals(t2.getRol())) {
+		if (!t1.getRol().equals(t2.getRol())) {
 			return false;
 		}
 		
-		if (t1.getEmail().equals(t2.getEmail())) {
+		if (!t1.getEmail().equals(t2.getEmail())) {
 			return false;
 		}
         

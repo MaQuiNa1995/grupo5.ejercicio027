@@ -1,7 +1,6 @@
 package es.cic.curso.grupo5.ejercicio027.backend.repository;
 
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 

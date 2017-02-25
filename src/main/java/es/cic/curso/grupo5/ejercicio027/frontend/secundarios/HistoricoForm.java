@@ -105,7 +105,7 @@ public class HistoricoForm extends FormLayout {
 		horas.select(1);
 		horas.setImmediate(true);
 		horas.setWidth(80, Unit.PIXELS);
-
+ 
 		minutos = new ComboBox("Minuto",listaMinutos);
 		minutos.setNullSelectionAllowed(false);
 		minutos.select(1);

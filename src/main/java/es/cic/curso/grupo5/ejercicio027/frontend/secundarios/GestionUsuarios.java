@@ -36,10 +36,7 @@ public class GestionUsuarios extends HorizontalLayout {
 			usuarioService.generaBBDD();
 		}
 		
-		HorizontalLayout hlGrids= new HorizontalLayout();
-		hlGrids.setSpacing(true);
-		hlGrids.setSizeFull();
-				
+	 
 		aniadirUsuario = new NativeButton("Añadir Usuario");
 		aniadirUsuario.setIcon(FontAwesome.PLUS);
 		
@@ -101,4 +98,5 @@ public class GestionUsuarios extends HorizontalLayout {
 				);
 		detalleUsuario.setUsuario(null);		
 		}
+	
 	}

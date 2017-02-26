@@ -124,14 +124,14 @@ public class Historico implements Identificable<Long>{
 	}
  
 		
-//	///modificacion javi
-//		public String getNombre(){
-//			return usuario.getNombre();
-//		}
-//		public String getRol(){
-//			return usuario.getRol();
-//		}
-//		
+	///modificacion javi
+		public String getNombre(){
+			return usuario.getNombre();
+		}
+		public String getRol(){
+			return usuario.getRol();
+		}
+		
  
  
 }

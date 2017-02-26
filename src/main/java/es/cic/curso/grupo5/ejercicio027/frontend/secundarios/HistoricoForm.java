@@ -15,11 +15,9 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
-
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico;
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 import es.cic.curso.grupo5.ejercicio027.backend.service.UsuarioService;
-import es.cic.curso.grupo5.ejercicio027.frontend.principal.MyUI;
 
 public class HistoricoForm extends FormLayout {
 	 
@@ -27,7 +25,7 @@ public class HistoricoForm extends FormLayout {
 	private UsuarioService usuarioService;
 
 	@SuppressWarnings("unused")
-	private MyUI padre;
+	private GestionHistoricos padre;
 
 	@PropertyId("usuario")
 	private Usuario usuario;
@@ -45,7 +43,7 @@ public class HistoricoForm extends FormLayout {
 	private Historico historico;
 	private List<Usuario> listaUsuarios;
 
-	public HistoricoForm(MyUI padre) {
+	public HistoricoForm(GestionHistoricos padre) {
 		this.padre = padre;
 
 		usuarioService = ContextLoader.getCurrentWebApplicationContext().getBean(UsuarioService.class);	
@@ -65,6 +63,7 @@ public class HistoricoForm extends FormLayout {
 		listaOperaciones.add("ingresar nóminas");
 
 		listaUsuarios = usuarioService.listarUsuario();
+		
 		List<String> listaNombres = new ArrayList<>();
 		for(Usuario user :listaUsuarios){	
 			listaNombres.add(user.getNombre());

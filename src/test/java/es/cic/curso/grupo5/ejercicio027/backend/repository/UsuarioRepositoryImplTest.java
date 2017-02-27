@@ -7,8 +7,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
-import es.cic.curso.grupo5.ejercicio027.backend.repository.UsuarioRepository;
-import es.cic.curso.grupo5.ejercicio027.backend.repository.IRepository;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {

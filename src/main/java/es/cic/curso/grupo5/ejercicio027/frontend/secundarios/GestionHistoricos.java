@@ -1,9 +1,7 @@
 package es.cic.curso.grupo5.ejercicio027.frontend.secundarios;
 
 import java.util.ArrayList;
- 
 import java.util.Comparator;
- 
 import java.util.List;
 
 import org.springframework.web.context.ContextLoader;
@@ -20,8 +18,8 @@ import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 import es.cic.curso.grupo5.ejercicio027.backend.dto.HistoricoConverter;
 import es.cic.curso.grupo5.ejercicio027.backend.dto.HistoricoDTO;
 import es.cic.curso.grupo5.ejercicio027.backend.service.HistoricoService;
-import es.cic.curso.grupo5.ejercicio027.frontend.principal.MyUI;
 import es.cic.curso.grupo5.ejercicio027.backend.service.UsuarioService;
+import es.cic.curso.grupo5.ejercicio027.frontend.principal.MyUI;
 
 public class GestionHistoricos  extends HorizontalLayout {
 

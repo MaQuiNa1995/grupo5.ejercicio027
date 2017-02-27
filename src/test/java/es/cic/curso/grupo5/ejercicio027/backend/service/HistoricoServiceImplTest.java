@@ -1,6 +1,7 @@
 package es.cic.curso.grupo5.ejercicio027.backend.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
 
@@ -18,7 +19,6 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 
-import es.cic.curso.grupo5.ejercicio027.backend.service.HistoricoService;
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico;
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 

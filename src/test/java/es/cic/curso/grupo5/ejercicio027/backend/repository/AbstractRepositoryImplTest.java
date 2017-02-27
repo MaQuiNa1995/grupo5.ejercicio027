@@ -9,16 +9,13 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
-import org.junit.Before;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.support.DependencyInjectionTestExecutionListener;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
-
-import es.cic.curso.grupo5.ejercicio027.backend.repository.IRepository;
-import es.cic.curso.grupo5.ejercicio027.backend.repository.Identificable;
 
 @TestExecutionListeners({DependencyInjectionTestExecutionListener.class, TransactionalTestExecutionListener.class})
 @Transactional

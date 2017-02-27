@@ -13,6 +13,7 @@ import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.VerticalLayout;
+
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 import es.cic.curso.grupo5.ejercicio027.backend.service.UsuarioService;
 import es.cic.curso.grupo5.ejercicio027.frontend.principal.MyUI;
@@ -72,7 +73,7 @@ public class GestionUsuarios extends HorizontalLayout {
 			aniadirUsuarios();
 		});
 		
-		cancelar.addClickListener(e->{});
+	
 		modificar.addClickListener(e->{
 
 			listaUsuarios = usuarioService.listarUsuario();

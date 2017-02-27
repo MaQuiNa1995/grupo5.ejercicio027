@@ -1,5 +1,4 @@
 package es.cic.curso.grupo5.ejercicio027.frontend.secundarios;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -45,9 +44,9 @@ public class UsuarioForm extends FormLayout {
 		final HorizontalLayout horizontal2 = new HorizontalLayout();
 		final HorizontalLayout horizontal3 = new HorizontalLayout();
 		final HorizontalLayout espacio = new HorizontalLayout();
-		final HorizontalLayout horizontal5 = new HorizontalLayout();
-		
+		final HorizontalLayout horizontal5 = new HorizontalLayout();		
 		final HorizontalLayout horizontal6 = new HorizontalLayout();
+	    
 		horizontal1.setSpacing(true);
 		horizontal2.setSpacing(true);
 		horizontal3.setSpacing(true);
@@ -75,7 +74,7 @@ public class UsuarioForm extends FormLayout {
 		roles.setImmediate(true);
 		roles.setWidth(300, Unit.PIXELS);
 		
-		confirmar = new NativeButton("Registrar/modificar");
+		confirmar = new NativeButton();
 		confirmar.setIcon(FontAwesome.SAVE);
 
 		cancelar = new NativeButton("Cancelar");
@@ -113,15 +112,13 @@ public class UsuarioForm extends FormLayout {
 			padre.cargaGridUsuarios(usuario);
 			
 		});
-		
-		
-		
+			
 		horizontal1.addComponents(nombre);
 		horizontal6.addComponent(password);
 		horizontal2.addComponents(roles);
 		horizontal3.addComponents(email);
-		horizontal5.addComponents(confirmar,cancelar,eliminar);
-		addComponents(horizontal1,horizontal6,horizontal2,horizontal3,espacio,horizontal5);	
+		horizontal5.addComponents(confirmar,eliminar);
+		addComponents(horizontal1,horizontal6,horizontal2,horizontal3,espacio,horizontal5,cancelar);	
 
 		setUsuario(null);	
 	}
@@ -138,6 +135,18 @@ public class UsuarioForm extends FormLayout {
 		} else {
 			BeanFieldGroup.bindFieldsUnbuffered(new Usuario(), this);
 		}
+	}
+	public void verEliminar() {
+		eliminar.setVisible(true);
+	}
+	public void esconderEliminar() {
+		eliminar.setVisible(false);
+	}
+	public void cambiarTextoAniadir(){
+		confirmar.setCaption("Añadir");	
+	}
+	public void cambiarTextoModifi(){
+		confirmar.setCaption("Modificar");	
 	}
 		
 }

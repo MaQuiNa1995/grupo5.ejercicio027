@@ -17,7 +17,6 @@ import es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico;
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 import es.cic.curso.grupo5.ejercicio027.backend.dto.HistoricoConverter;
 import es.cic.curso.grupo5.ejercicio027.backend.dto.HistoricoDTO;
-import es.cic.curso.grupo5.ejercicio027.backend.service.HistoricoService;
 import es.cic.curso.grupo5.ejercicio027.backend.service.UsuarioService;
 import es.cic.curso.grupo5.ejercicio027.frontend.principal.MyUI;
 
@@ -31,9 +30,7 @@ public class GestionHistoricos  extends HorizontalLayout {
 	private NativeButton aniadirHistorico;
 	Grid gridHistorico;
 	private HistoricoForm detalleHistorico;
-	private Historico historico; 
-	private HistoricoDTO historicoDTO;
-	private HistoricoService historicoService;
+ 
 	@SuppressWarnings("unused")
 	private MyUI padre;
 
@@ -43,39 +40,20 @@ public class GestionHistoricos  extends HorizontalLayout {
 	
 	public GestionHistoricos(MyUI padre){
 		this.padre = padre;
-		historicoService = ContextLoader.getCurrentWebApplicationContext().getBean(HistoricoService.class);	
 		usuarioService = ContextLoader.getCurrentWebApplicationContext().getBean(UsuarioService.class);	
-
-		
+	
 		aniadirHistorico = new NativeButton("Añadir Registro");
 		aniadirHistorico.setIcon(FontAwesome.PLUS);
+		
 		gridHistorico = new Grid();
-		
-		gridHistorico.setWidth(1000, Unit.PIXELS);
- 
-		
+		gridHistorico.setWidth(820, Unit.PIXELS);	
 		gridHistorico.setColumns("usuario","operacion","hora");
-		gridHistorico.addSelectionListener(e -> 
-		{		
-			historicoDTO = null;
-			if (!e.getSelected().isEmpty() ) {
-				
-				historicoDTO = (HistoricoDTO) e.getSelected().iterator().next();
-				detalleHistorico.setVisible(true);
-				aniadirHistorico.setVisible(false);
-				detalleHistorico.atualizarUsuarios();
-				
-			} else{
-				
-			  detalleHistorico.setVisible(false);
-			  aniadirHistorico.setVisible(true);
-				
-			}
-			detalleHistorico.setHistorico(historico);	
-		});
+	
+		gridHistorico.setFrozenColumnCount(1);
+		gridHistorico.setSelectionMode(SelectionMode.NONE);	
+		
 		detalleHistorico = new HistoricoForm(this);
 
-		
 		aniadirHistorico.addClickListener(e->{	
 			aniadirHistorico.setVisible(false);
 			detalleHistorico.atualizarUsuarios();
@@ -83,11 +61,8 @@ public class GestionHistoricos  extends HorizontalLayout {
 		});
 		
 		cargaHistoricos(null);
-		gridHistorico.setFrozenColumnCount(1);
-		gridHistorico.setSelectionMode(SelectionMode.SINGLE);	
 		
-		addComponents(gridHistorico,aniadirHistorico,detalleHistorico);
-		
+		addComponents(gridHistorico,aniadirHistorico,detalleHistorico);		
 	}
 	private void aniadirHistorico() {	
 		
@@ -101,10 +76,11 @@ public class GestionHistoricos  extends HorizontalLayout {
 
 
 	public void cargaHistoricos(Historico historico){	
+		
 		List<Usuario> u = usuarioService.listarUsuario();
-
 		aniadirHistorico.setVisible(true);
 		detalleHistorico.setVisible(false);
+		
 		if(historico!=null){
 			
 			for(Usuario user: u){
@@ -118,24 +94,15 @@ public class GestionHistoricos  extends HorizontalLayout {
 				 
 			}
 		}
-	
-
-	
-		 
+		
 		List<HistoricoDTO> lista  = new ArrayList<>();
-		lista = listaHistoricos;
-	 	
+		lista = listaHistoricos; 	
 		lista.sort(Comparator.comparing(HistoricoDTO::getHora).reversed());
 
-		
 		gridHistorico.setContainerDataSource(
-
-	  
 				new BeanItemContainer<>(HistoricoDTO.class, lista)
 				);
 		detalleHistorico.setHistorico(null);
 
 	}
-
 }
-

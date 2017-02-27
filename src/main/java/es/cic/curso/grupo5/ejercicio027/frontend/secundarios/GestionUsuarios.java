@@ -34,7 +34,6 @@ public class GestionUsuarios extends HorizontalLayout {
 	private MyUI padre;
 	private ComboBox usuarios=new ComboBox();
 	List<String> listaNombres = new ArrayList<>();
-	//TODO añadir boton cancelar en modificar
 	private NativeButton cancelar;
 
 	public GestionUsuarios(MyUI padre){
@@ -54,13 +53,13 @@ public class GestionUsuarios extends HorizontalLayout {
 		aniadirUsuario = new NativeButton("Añadir Usuario");
 		aniadirUsuario.setIcon(FontAwesome.PLUS);
 		modificar = new NativeButton("modificar");
-		modificar.setIcon(FontAwesome.PENCIL);
-		
+		modificar.setIcon(FontAwesome.PENCIL);		
 		cancelar = new NativeButton("Cancelar");
 		cancelar.setIcon(FontAwesome.REPLY);
 
 		gridUsuarios = new Grid();
-		gridUsuarios.setWidth(1000, Unit.PIXELS);
+		gridUsuarios.setWidth(800, Unit.PIXELS);
+		gridUsuarios.setHeight(540, Unit.PIXELS);
 		gridUsuarios.setColumns("nombre","password","rol","email");
 		gridUsuarios.setFrozenColumnCount(1);
 		gridUsuarios.setSelectionMode(SelectionMode.NONE);
@@ -78,10 +77,8 @@ public class GestionUsuarios extends HorizontalLayout {
 
 			listaUsuarios = usuarioService.listarUsuario();
 			listaNombres.clear();
-			for(Usuario user :listaUsuarios){
-				
+			for(Usuario user :listaUsuarios){			
 				if(user.isActivo()){
-				
 				listaNombres.add(user.getNombre());
 				}
 			}
@@ -105,6 +102,8 @@ public class GestionUsuarios extends HorizontalLayout {
 				for(Usuario user :listaUsuarios){
 					if(usuarios.getValue()==(user.getNombre())){
 						detalleUsuario.setVisible(true);
+						detalleUsuario.verEliminar();
+						detalleUsuario.cambiarTextoModifi();
 						detalleUsuario.setUsuario(user);
 						cancelar.setVisible(false);
 					}					
@@ -129,11 +128,11 @@ public class GestionUsuarios extends HorizontalLayout {
 	}
 	private void aniadirUsuarios() {	
 		detalleUsuario.setVisible(true);
+		detalleUsuario.esconderEliminar();
+		detalleUsuario.cambiarTextoAniadir();
 		Usuario u = new Usuario("","","","",true);
 		detalleUsuario.setUsuario(u);
-//		gridUsuarios.setContainerDataSource(
-//				new BeanItemContainer<>(Usuario.class, listaUsuarios)
-//				);
+
 	}
 
 	public void cargaGridUsuarios(Usuario user) {
@@ -147,15 +146,13 @@ public class GestionUsuarios extends HorizontalLayout {
 			usuarioService.modificarUsuario(user);
 		}	
 
-
-
 		listaUsuarios= usuarioService.listarUsuario();
 
 		List<Usuario> listaUsuariosActivos = new ArrayList<>();
-		for (Usuario usuariosActivos : listaUsuarios) {
+		for (Usuario usuariosActivo : listaUsuarios) {
 
-			if(usuariosActivos.isActivo())
-				listaUsuariosActivos.add(usuariosActivos);
+			if(usuariosActivo.isActivo())
+				listaUsuariosActivos.add(usuariosActivo);
 		}
 
 		gridUsuarios.setContainerDataSource(

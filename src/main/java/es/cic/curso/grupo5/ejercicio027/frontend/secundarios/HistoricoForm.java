@@ -1,5 +1,7 @@
 package es.cic.curso.grupo5.ejercicio027.frontend.secundarios;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeButton;
@@ -36,7 +39,6 @@ public class HistoricoForm extends FormLayout {
 	@PropertyId("hora")
 	protected String hora;
 
-
 	private NativeButton confirmar;
 	private NativeButton cancelar;
 	private ComboBox horas;
@@ -45,28 +47,24 @@ public class HistoricoForm extends FormLayout {
 	private Historico historico;
 	private List<Usuario> listaUsuarios;
 	private final HorizontalLayout horizontal1;
- 
 	private HistoricoService historicoService;
- 
 	private List<String> listaNombres= new ArrayList<>();
-	private NativeButton actualizar;
- 
-
+	
 	public HistoricoForm(GestionHistoricos padre) {
 		this.padre = padre;
 		historico = new Historico();
 		usuarioService = ContextLoader.getCurrentWebApplicationContext().getBean(UsuarioService.class);	
 		historicoService = ContextLoader.getCurrentWebApplicationContext().getBean(HistoricoService.class);	
 
-	
-
 		horizontal1 = new HorizontalLayout();
 		final HorizontalLayout horizontal2 = new HorizontalLayout();
-		final HorizontalLayout horizontal3 = new HorizontalLayout();
-		final HorizontalLayout horizontal4 = new HorizontalLayout();
+		final HorizontalLayout horizontal3 = new HorizontalLayout();		
+		final HorizontalLayout espacio = new HorizontalLayout();
+		
 		horizontal1.setSpacing(true);
 		horizontal2.setSpacing(true);
 		horizontal3.setSpacing(true);
+		
 
 		List<String> listaOperaciones = new ArrayList<>();
 		listaOperaciones.add("borrar archivos");
@@ -91,6 +89,8 @@ public class HistoricoForm extends FormLayout {
 			listaMinutos.add(String.valueOf(i));
 		}
         
+        DateField date = new DateField("fecha");
+		
         
 		operacion = new ComboBox("Operación",listaOperaciones);
 		operacion.setNullSelectionAllowed(false);
@@ -99,7 +99,6 @@ public class HistoricoForm extends FormLayout {
 		operacion.setWidth(300, Unit.PIXELS);
 		operacion.setInputPrompt("seleccione operacion");
 		
-
 		horas = new ComboBox("Hora",listaHoras);
 		horas.setNullSelectionAllowed(false);
 		horas.select(1);
@@ -111,40 +110,34 @@ public class HistoricoForm extends FormLayout {
 		minutos.select(1);
 		minutos.setImmediate(true);
 		minutos.setWidth(90, Unit.PIXELS);
-	 
-		
-		
-		
-		
+	 	
 		confirmar = new NativeButton("Registrar histórico");
 		confirmar.setIcon(FontAwesome.SAVE);
 
 		cancelar = new NativeButton("Cancelar");
 		cancelar.setIcon(FontAwesome.REPLY);
 	 	
-		
-				
+					
 		confirmar.addClickListener(e->{
-			if(operacion.getValue()==null||horas.getValue()==null|| minutos.getValue()==null || historico.getUsuario()==null){	
+			if(operacion.getValue()==null||horas.getValue()==null|| minutos.getValue()==null || historico.getUsuario()==null ||date.getValue()==null){	
 				Notification sample = new Notification("Rellene todos los campos");
 				mostrarNotificacion(sample);	
 			}
 			else{
-				 
-				historico.setHora(horas.getValue() +":"+minutos.getValue());
- 
+				DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd ");
+				String convertido = fechaHora.format(date.getValue());
+				historico.setHora(convertido+horas.getValue() +":"+minutos.getValue());
 				historicoService.aniadirHistorico(historico);
-			
-				
- 
+		
 				Notification notificacionOperacion = new Notification(nombreUser.getValue()+""
 						+ "realizo la operacion de: "+operacion.getValue());
-				
 				mostrarNotificacion(notificacionOperacion);
+				
 				nombreUser.clear();
 				nombreUser.setVisible(false);
 				horas.clear();
 				minutos.clear();
+				date.clear();
 				padre.cargaHistoricos(historico);
 				operacion.clear();
 				setHistorico(null);
@@ -152,8 +145,8 @@ public class HistoricoForm extends FormLayout {
 		});
 
 		cancelar.addClickListener(e->{
-
-
+			
+			date.clear();
 			nombreUser.clear();
 			nombreUser.setVisible(false);
 			horas.clear();
@@ -164,13 +157,10 @@ public class HistoricoForm extends FormLayout {
 		});
 		 
 		horizontal2.addComponents(operacion);
-		horizontal3.addComponents(horas,minutos);
+		horizontal3.addComponents(date,horas,minutos);
+
+		addComponents(horizontal1,horizontal2,horizontal3,espacio,confirmar,cancelar);	
 	
-
-		addComponents(horizontal1,horizontal2,horizontal3,horizontal4,confirmar,cancelar);	
-
-
-		
 	}
 	public void atualizarUsuarios() {
 		listaUsuarios = usuarioService.listarUsuario();
@@ -214,11 +204,5 @@ public class HistoricoForm extends FormLayout {
 			BeanFieldGroup.bindFieldsUnbuffered(new Historico(), this);
 		}
 	}
-	public NativeButton getActualizar() {
-		return actualizar;
-	}
-	public void setActualizar(NativeButton actualizar) {
-		this.actualizar = actualizar;
-	}
-	 
+ 	 
 }

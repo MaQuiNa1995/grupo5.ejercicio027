@@ -31,7 +31,7 @@ public class UsuarioForm extends FormLayout {
 	private NativeButton cancelar;
 	
 	private Usuario usuario;
-
+	private GestionHistoricos gestionHistoricos;
 	@SuppressWarnings("unused")
 	private GestionUsuarios padre;
 	
@@ -84,6 +84,8 @@ public class UsuarioForm extends FormLayout {
 				
 				mostrarNotificacion(notificacionOperacion);
 				padre.cargaGridUsuarios(usuario);
+				
+			
 		
 			}
 		});

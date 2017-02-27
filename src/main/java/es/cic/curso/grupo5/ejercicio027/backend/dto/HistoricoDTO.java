@@ -1,29 +1,12 @@
 package es.cic.curso.grupo5.ejercicio027.backend.dto;
 
 public class HistoricoDTO {
-	String nombre;
-	String rol;
+	String usuario;
 	String operacion;
 	String hora;
 	
 	public HistoricoDTO() {
 		super();
-	}
-	
-	public String getNombre() {
-		return nombre;
-	}
-	
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-	
-	public String getRol() {
-		return rol;
-	}
-	
-	public void setRol(String rol) {
-		this.rol = rol;
 	}
 	
 	public String getOperacion() {
@@ -40,6 +23,14 @@ public class HistoricoDTO {
 	
 	public void setHora(String hora) {
 		this.hora = hora;
+	}
+
+	public String getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(String usuario) {
+		this.usuario = usuario;
 	}
 	
 	

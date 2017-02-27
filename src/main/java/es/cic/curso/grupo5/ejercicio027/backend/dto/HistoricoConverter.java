@@ -8,25 +8,22 @@ import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 
 @Component
 public class HistoricoConverter {
-	public HistoricoDTO entityToDto(Historico historico,Usuario usuario) {
-		
+	public HistoricoDTO entityToDto(Historico historico, Usuario u) {
+		System.out.println("resultadooooo");
 		HistoricoDTO resultado = new HistoricoDTO();
-		
-		resultado.setNombre(usuario.getNombre());
-		resultado.setRol(usuario.getRol());
+		resultado.setUsuario(u.getNombre());
 		resultado.setOperacion(historico.getOperacion());
 		resultado.setHora(historico.getHora());
 		
 		return resultado;
 		
 	}
-/*	
+/*
 	
 	public Historico DTO2Entity(HistoricoDTO historicoDTO, UsuarioDTO usuarioDTO) {
 		Historico resultado = new Historico();
 		
-		resultado.setNombre(usuarioDTO.getNombre());
-		resultado.setRol(usuarioDTO.getRol());
+		resultado.setUsuario(usuarioDTO.getNombre());
 		resultado.setOperacion(historicoDTO.getOperacion());
 		resultado.setHora(historicoDTO.getHora());
 		return resultado;		
@@ -47,5 +44,5 @@ public class HistoricoConverter {
 		};
 		return resultado;		
 	}	
-*/	
+*/
 }

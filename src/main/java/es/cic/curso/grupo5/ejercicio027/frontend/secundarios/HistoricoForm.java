@@ -17,7 +17,11 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico;
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
+import es.cic.curso.grupo5.ejercicio027.backend.dto.UsuarioConverter;
+import es.cic.curso.grupo5.ejercicio027.backend.dto.UsuarioDTO;
+import es.cic.curso.grupo5.ejercicio027.backend.service.HistoricoService;
 import es.cic.curso.grupo5.ejercicio027.backend.service.UsuarioService;
+
 
 public class HistoricoForm extends FormLayout {
 	 
@@ -34,6 +38,7 @@ public class HistoricoForm extends FormLayout {
 	@PropertyId("hora")
 	protected String hora;
 
+
 	private NativeButton confirmar;
 	private NativeButton cancelar;
 	private ComboBox horas;
@@ -42,11 +47,15 @@ public class HistoricoForm extends FormLayout {
 	private ComboBox nombreUser;
 	private Historico historico;
 	private List<Usuario> listaUsuarios;
+	private HistoricoService historicoService;
 
 	public HistoricoForm(GestionHistoricos padre) {
 		this.padre = padre;
 
 		usuarioService = ContextLoader.getCurrentWebApplicationContext().getBean(UsuarioService.class);	
+		historicoService = ContextLoader.getCurrentWebApplicationContext().getBean(HistoricoService.class);	
+
+		
 
 		final HorizontalLayout horizontal1 = new HorizontalLayout();
 		final HorizontalLayout horizontal2 = new HorizontalLayout();
@@ -146,7 +155,7 @@ public class HistoricoForm extends FormLayout {
 //				Historico historico = new Historico(operacion.getValue().toString(),
 //						horas.getValue().toString()+":"+minutos.getValue().toString(),usuario);
 //				Da error porque el container de historico no tiene un campo nombre
-				
+				historicoService.aniadirHistorico(historico);
 				Notification notificacionOperacion = new Notification(nombreUser.getValue()+""
 						+ "realizo la operacion de: "+operacion.getValue());
 				
@@ -154,7 +163,7 @@ public class HistoricoForm extends FormLayout {
 				nombreUser.clear();
 				horas.clear();
 				minutos.clear();
-				padre.cargaGridHistorico(historico);			
+				padre.cargaHistoricos(historico);
 			}
 		});
 
@@ -164,7 +173,7 @@ public class HistoricoForm extends FormLayout {
 			operacion.clear();
 			horas.clear();
 			minutos.clear();
-			padre.cargaGridHistorico(null);
+			padre.cargaHistoricos(null);
 
 		});
 

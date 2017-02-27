@@ -33,6 +33,8 @@ public class GestionUsuarios extends HorizontalLayout {
 	private MyUI padre;
 	private ComboBox usuarios=new ComboBox();
 	List<String> listaNombres = new ArrayList<>();
+	//TODO añadir boton cancelar en modificar
+	private NativeButton cancelar;
 
 	public GestionUsuarios(MyUI padre){
 		this.padre = padre;
@@ -52,6 +54,9 @@ public class GestionUsuarios extends HorizontalLayout {
 		aniadirUsuario.setIcon(FontAwesome.PLUS);
 		modificar = new NativeButton("modificar");
 		modificar.setIcon(FontAwesome.PENCIL);
+		
+		cancelar = new NativeButton("Cancelar");
+		cancelar.setIcon(FontAwesome.REPLY);
 
 		gridUsuarios = new Grid();
 		gridUsuarios.setWidth(1000, Unit.PIXELS);
@@ -66,7 +71,8 @@ public class GestionUsuarios extends HorizontalLayout {
 			modificar.setVisible(false);
 			aniadirUsuarios();
 		});
-
+		
+		cancelar.addClickListener(e->{});
 		modificar.addClickListener(e->{
 
 			listaUsuarios = usuarioService.listarUsuario();
@@ -84,8 +90,9 @@ public class GestionUsuarios extends HorizontalLayout {
 			aniadirUsuario.setVisible(false);
 			modificar.setVisible(false);
 			usuarios.setVisible(true);
+			cancelar.setVisible(true);
 
-			extra.addComponent(usuarios);
+			extra.addComponents(usuarios,cancelar);
 
 			usuarios.addValueChangeListener(a->{
 
@@ -93,11 +100,25 @@ public class GestionUsuarios extends HorizontalLayout {
 				for(Usuario user :listaUsuarios){
 					if(usuarios.getValue()==(user.getNombre())){
 						detalleUsuario.setVisible(true);
-						detalleUsuario.setUsuario(user);	
+						detalleUsuario.setUsuario(user);
+						cancelar.setVisible(false);
 					}					
 				}		
 			});
 
+			cancelar.addClickListener(a->{
+				
+				usuarios.setVisible(false);
+				cancelar.setVisible(false);
+				aniadirUsuario.setVisible(true);
+				modificar.setVisible(true);
+				
+				
+			});
+			
+			
+			
+			
 		});
 
 		vertical.addComponents(aniadirUsuario,modificar,extra,detalleUsuario);

@@ -1,7 +1,6 @@
 package es.cic.curso.grupo5.ejercicio027.backend.dto;
 
 import java.util.ArrayList;
-
 import java.util.List;
 
 import org.springframework.stereotype.Component;

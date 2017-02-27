@@ -17,10 +17,9 @@ import com.vaadin.ui.Link;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
+
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico;
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
-import es.cic.curso.grupo5.ejercicio027.backend.dto.UsuarioConverter;
-import es.cic.curso.grupo5.ejercicio027.backend.dto.UsuarioDTO;
 import es.cic.curso.grupo5.ejercicio027.backend.service.HistoricoService;
 import es.cic.curso.grupo5.ejercicio027.backend.service.UsuarioService;
 

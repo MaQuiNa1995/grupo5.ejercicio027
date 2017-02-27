@@ -2,17 +2,16 @@ package es.cic.curso.grupo5.ejercicio027.frontend.secundarios;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.context.ContextLoader;
 
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.Grid;
+import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeButton;
-import com.vaadin.ui.Grid.SelectionMode;
+
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico;
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 import es.cic.curso.grupo5.ejercicio027.backend.dto.HistoricoConverter;
@@ -103,14 +102,11 @@ public class GestionHistoricos  extends HorizontalLayout {
 		aniadirHistorico.setVisible(true);
 		detalleHistorico.setVisible(false);
 		if(!listaHistoricos.isEmpty()){
-			//listaHistoricos.clear();
-			//listaHistoricos = conv.entity2DTO(historicoService.listarHistorico(), usuarioService.listarUsuario());
+			
 		}
 		
 		if(historico!=null){
-			//historicoService.modificarHistorico(historico);
 			
-
 			for(Usuario user: u){
 				
 				if(historico.getUsuario().getNombre().equals(user.getNombre())){

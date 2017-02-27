@@ -146,6 +146,8 @@ public class GestionUsuarios extends HorizontalLayout {
 		if(user != null){
 			usuarioService.modificarUsuario(user);
 		}	
+		
+		
 
 		listaUsuarios= usuarioService.listarUsuario();
 

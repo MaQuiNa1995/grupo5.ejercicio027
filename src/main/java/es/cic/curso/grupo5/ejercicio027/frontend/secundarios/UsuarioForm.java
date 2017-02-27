@@ -33,6 +33,7 @@ public class UsuarioForm extends FormLayout {
 	private NativeButton confirmar;
 	private NativeButton cancelar;	
 	private Usuario usuario;
+	private NativeButton eliminar;
 
 	@SuppressWarnings("unused")
 	private GestionUsuarios padre;
@@ -79,6 +80,9 @@ public class UsuarioForm extends FormLayout {
 
 		cancelar = new NativeButton("Cancelar");
 		cancelar.setIcon(FontAwesome.REPLY);
+		
+		eliminar = new NativeButton("Eliminar usuario");
+		eliminar.setIcon(FontAwesome.TRASH);
 	 
 	
 		confirmar.addClickListener(e->{
@@ -100,11 +104,23 @@ public class UsuarioForm extends FormLayout {
 
 		});
 
+		eliminar.addClickListener(e->{
+			
+			Notification notificacionOperacion = 
+					new Notification("El usuario : "+ nombre.getValue()+" ha sido dado de baja");
+			mostrarNotificacion(notificacionOperacion);
+			usuario.setActivo(false);
+			padre.cargaGridUsuarios(usuario);
+			
+		});
+		
+		
+		
 		horizontal1.addComponents(nombre);
 		horizontal6.addComponent(password);
 		horizontal2.addComponents(roles);
 		horizontal3.addComponents(email);
-		horizontal5.addComponents(confirmar,cancelar);
+		horizontal5.addComponents(confirmar,cancelar,eliminar);
 		addComponents(horizontal1,horizontal6,horizontal2,horizontal3,espacio,horizontal5);	
 
 		setUsuario(null);	

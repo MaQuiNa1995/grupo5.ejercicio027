@@ -107,7 +107,7 @@ public class GestionUsuarios extends HorizontalLayout {
 	}
 	private void aniadirUsuarios() {	
 		detalleUsuario.setVisible(true);
-		Usuario u = new Usuario("","","","");
+		Usuario u = new Usuario("","","","",false);
 		detalleUsuario.setUsuario(u);
 		gridUsuarios.setContainerDataSource(
 				new BeanItemContainer<>(Usuario.class, listaUsuarios)

@@ -94,7 +94,6 @@ public class GestionHistoricos  extends HorizontalLayout {
 	private void aniadirHistorico() {	
 		
 		detalleHistorico.setVisible(true);
-		//detalleHistorico.getActualizar().setVisible(true);
 		Historico h = new Historico("","",null);
 		detalleHistorico.setHistorico(h);
 		gridHistorico.setContainerDataSource(

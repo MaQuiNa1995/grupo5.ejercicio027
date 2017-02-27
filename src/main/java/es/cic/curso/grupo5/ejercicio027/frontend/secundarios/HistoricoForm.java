@@ -7,17 +7,17 @@ import org.springframework.web.context.ContextLoader;
 
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.PropertyId;
-import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Link;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Notification;
+ 
 import com.vaadin.ui.TextField;
 
+ 
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico;
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 import es.cic.curso.grupo5.ejercicio027.backend.service.HistoricoService;
@@ -44,11 +44,15 @@ public class HistoricoForm extends FormLayout {
 	private NativeButton cancelar;
 	private ComboBox horas;
 	private ComboBox minutos;
-	private TextField roleUser;
-	private ComboBox nombreUser;
+	private ComboBox nombreUser=new ComboBox();
 	private Historico historico;
 	private List<Usuario> listaUsuarios;
+ 
 	private HistoricoService historicoService;
+ 
+	private List<String> listaNombres= new ArrayList<>();
+	private NativeButton actualizar;
+ 
 
 	public HistoricoForm(GestionHistoricos padre) {
 		this.padre = padre;
@@ -72,12 +76,6 @@ public class HistoricoForm extends FormLayout {
 		listaOperaciones.add("realzar venta por internet");		
 		listaOperaciones.add("ingresar nóminas");
 
-		listaUsuarios = usuarioService.listarUsuario();
-		
-		List<String> listaNombres = new ArrayList<>();
-		for(Usuario user :listaUsuarios){	
-			listaNombres.add(user.getNombre());
- 		}
 
 		List<String> listaHoras = new ArrayList<>();
 		for(int i =0;i<10;i++){		
@@ -95,20 +93,48 @@ public class HistoricoForm extends FormLayout {
 			listaMinutos.add(String.valueOf(i));
 		}
 		
-        Link refresco = new Link("Actualizar Usuarios", new ExternalResource(
-                "http://localhost:8080"));
+ 
         
-		nombreUser = new ComboBox("Nombre",listaNombres);
-		nombreUser.setNullSelectionAllowed(false);
-		nombreUser.select(1);
-		nombreUser.setImmediate(true);
-		nombreUser.setWidth(300, Unit.PIXELS);
-
+        actualizar = new NativeButton("Pulse para seleccionar usuario");
+        
+        actualizar.addClickListener(e->{
+        	
+        	actualizar.setVisible(false);
+        	listaUsuarios = usuarioService.listarUsuario();
+        	listaNombres.clear();
+    		for(Usuario user :listaUsuarios){	
+    			
+    			listaNombres.add(user.getNombre());
+     		}
+    		
+    		nombreUser = new ComboBox("Nombre",listaNombres);
+    		nombreUser.setNullSelectionAllowed(false);
+    		nombreUser.select(1);
+    		nombreUser.setImmediate(true);
+    		nombreUser.setInputPrompt("seleccione usuario");
+    		nombreUser.setWidth(300, Unit.PIXELS);
+    		
+    		nombreUser.addValueChangeListener(a->{
+    			for(Usuario user :listaUsuarios){
+    				if(nombreUser.getValue()==(user.getNombre())){
+    					Notification sample = new Notification("Usuario con permisos de : "+user.getRol());
+    					mostrarNotificacion(sample);
+    					historico.setUsuario(user);
+    				}
+    			}			
+    		});
+    		
+    		horizontal1.addComponent(nombreUser);
+    		        	
+        });
+        
+        
 		operacion = new ComboBox("Operación",listaOperaciones);
 		operacion.setNullSelectionAllowed(false);
 		operacion.select(1);
 		operacion.setImmediate(true);
 		operacion.setWidth(300, Unit.PIXELS);
+		operacion.setInputPrompt("seleccione operacion");
 		
 
 		horas = new ComboBox("Hora",listaHoras);
@@ -122,45 +148,34 @@ public class HistoricoForm extends FormLayout {
 		minutos.select(1);
 		minutos.setImmediate(true);
 		minutos.setWidth(90, Unit.PIXELS);
-		
-		roleUser = new TextField("rol del usuario");
-		roleUser.setReadOnly(true);
-		
+	 
 		confirmar = new NativeButton("Registrar histórico");
 		confirmar.setIcon(FontAwesome.SAVE);
 
 		cancelar = new NativeButton("Cancelar");
 		cancelar.setIcon(FontAwesome.REPLY);
 	 	
-		nombreUser.addValueChangeListener(e->{
-			for(Usuario user :listaUsuarios){
-				if(nombreUser.getValue()==(user.getNombre())){
-					Notification sample = new Notification("Usuario con permisos de : "+user.getRol());
-					mostrarNotificacion(sample); 
-				}
-			}
-		});
+		
 				
 		confirmar.addClickListener(e->{
-			if(operacion.getValue()==null||horas.getValue()==null|| minutos.getValue()==null || nombreUser.getValue()==null ){	
+			if(operacion.getValue()==null||horas.getValue()==null|| minutos.getValue()==null || historico.getUsuario()==null){	
 				Notification sample = new Notification("Rellene todos los campos");
 				mostrarNotificacion(sample);	
 			}
 			else{
-				for(Usuario user :listaUsuarios){	
-					if(nombreUser.getValue().equals(user.getNombre())){	
-						historico.setUsuario(user);
-					}
-				}
+				 
 				historico.setHora(horas.getValue() +":"+minutos.getValue());
+ 
 				historicoService.aniadirHistorico(historico);
 			
 				
+ 
 				Notification notificacionOperacion = new Notification(nombreUser.getValue()+""
 						+ "realizo la operacion de: "+operacion.getValue());
 				
 				mostrarNotificacion(notificacionOperacion);
 				nombreUser.clear();
+				nombreUser.setVisible(false);
 				horas.clear();
 				minutos.clear();
 				padre.cargaHistoricos(historico);
@@ -171,6 +186,7 @@ public class HistoricoForm extends FormLayout {
 
 		cancelar.addClickListener(e->{
 
+
 			nombreUser.clear();
 			horas.clear();
 			minutos.clear();
@@ -178,12 +194,13 @@ public class HistoricoForm extends FormLayout {
 			operacion.clear();
 
 		});
-
-		horizontal1.addComponents(nombreUser,refresco);
+		 
 		horizontal2.addComponents(operacion);
 		horizontal3.addComponents(horas,minutos);
-		
-		addComponents(horizontal1,horizontal2,horizontal3,horizontal4,confirmar,cancelar);	
+	
+
+		addComponents(actualizar,horizontal1,horizontal2,horizontal3,horizontal4,confirmar,cancelar);	
+
 
 		
 	}
@@ -201,4 +218,11 @@ public class HistoricoForm extends FormLayout {
 			BeanFieldGroup.bindFieldsUnbuffered(new Historico(), this);
 		}
 	}
+	public NativeButton getActualizar() {
+		return actualizar;
+	}
+	public void setActualizar(NativeButton actualizar) {
+		this.actualizar = actualizar;
+	}
+	 
 }

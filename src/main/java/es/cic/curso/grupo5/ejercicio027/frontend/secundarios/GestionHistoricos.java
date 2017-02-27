@@ -1,6 +1,9 @@
 package es.cic.curso.grupo5.ejercicio027.frontend.secundarios;
 
 import java.util.ArrayList;
+ 
+import java.util.Comparator;
+ 
 import java.util.List;
 
 import org.springframework.web.context.ContextLoader;
@@ -17,9 +20,8 @@ import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 import es.cic.curso.grupo5.ejercicio027.backend.dto.HistoricoConverter;
 import es.cic.curso.grupo5.ejercicio027.backend.dto.HistoricoDTO;
 import es.cic.curso.grupo5.ejercicio027.backend.service.HistoricoService;
-import es.cic.curso.grupo5.ejercicio027.backend.service.UsuarioService;
 import es.cic.curso.grupo5.ejercicio027.frontend.principal.MyUI;
-
+import es.cic.curso.grupo5.ejercicio027.backend.service.UsuarioService;
 
 public class GestionHistoricos  extends HorizontalLayout {
 
@@ -89,7 +91,8 @@ public class GestionHistoricos  extends HorizontalLayout {
 	}
 	private void aniadirHistorico() {	
 		
-		detalleHistorico.setVisible(true);		
+		detalleHistorico.setVisible(true);
+		detalleHistorico.getActualizar().setVisible(true);
 		Historico h = new Historico("","",null);
 		detalleHistorico.setHistorico(h);
 		gridHistorico.setContainerDataSource(
@@ -97,14 +100,13 @@ public class GestionHistoricos  extends HorizontalLayout {
 				);
 	}
 
+
 	public void cargaHistoricos(Historico historico){	
 		List<Usuario> u = usuarioService.listarUsuario();
+
 		aniadirHistorico.setVisible(true);
 		detalleHistorico.setVisible(false);
-		if(!listaHistoricos.isEmpty()){
-			
-		}
-		
+		detalleHistorico.getActualizar().setVisible(true);
 		if(historico!=null){
 			
 			for(Usuario user: u){
@@ -119,10 +121,22 @@ public class GestionHistoricos  extends HorizontalLayout {
 			}
 		}
 	
+
+	
+		 
+		List<HistoricoDTO> lista  = new ArrayList<>();
+		lista = listaHistoricos;
+	 	
+		lista.sort(Comparator.comparing(HistoricoDTO::getHora).reversed());
+
 		
 		gridHistorico.setContainerDataSource(
-	    		new BeanItemContainer<>(HistoricoDTO.class, listaHistoricos)
-	    );
+
+	  
+				new BeanItemContainer<>(HistoricoDTO.class, lista)
+				);
+		detalleHistorico.setHistorico(null);
+
 	}
 
 }

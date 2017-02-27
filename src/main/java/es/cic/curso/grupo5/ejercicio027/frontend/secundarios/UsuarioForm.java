@@ -77,7 +77,7 @@ public class UsuarioForm extends FormLayout {
 	 
 	
 		confirmar.addClickListener(e->{
-			if(roles.getValue()==null||nombre.getValue().equals("")|| password.getValue().equals("") || email.getValue().equals(""))
+			if(roles.getValue()==null||"".equals(nombre.getValue())|| "".equals(password.getValue()) || "".equals(email.getValue()))
 			{	
 				Notification sample = new Notification("Rellene todos los campos");
 				mostrarNotificacion(sample);	

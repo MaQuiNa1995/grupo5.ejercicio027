@@ -1,13 +1,17 @@
 package es.cic.curso.grupo5.ejercicio027.frontend.secundarios;
 
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.web.context.ContextLoader;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeButton;
+import com.vaadin.ui.VerticalLayout;
+
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 import es.cic.curso.grupo5.ejercicio027.backend.service.UsuarioService;
 import es.cic.curso.grupo5.ejercicio027.frontend.principal.MyUI;
@@ -18,85 +22,112 @@ public class GestionUsuarios extends HorizontalLayout {
 	 * 
 	 */
 	private static final long serialVersionUID = -7897900102340873208L;
-	private Usuario usuario;
 	private UsuarioService usuarioService;
 	private List<Usuario> listaUsuarios;
 	private UsuarioForm detalleUsuario;
 	private NativeButton aniadirUsuario;
-	Grid gridUsuarios;
+	private NativeButton modificar;
+	private Grid gridUsuarios;
 	@SuppressWarnings("unused")
 	private MyUI padre;
-	
+	private ComboBox usuarios=new ComboBox();
+	List<String> listaNombres = new ArrayList<>();
+
 	public GestionUsuarios(MyUI padre){
 		this.padre = padre;
+
 		usuarioService = ContextLoader.getCurrentWebApplicationContext().getBean(UsuarioService.class);
 		listaUsuarios = usuarioService.listarUsuario();
+		final VerticalLayout  vertical = new VerticalLayout();
+		vertical.setSpacing(true);
+		final VerticalLayout  extra = new VerticalLayout();
+		extra.setSpacing(true);
 
 		if(listaUsuarios.isEmpty()){	
 			usuarioService.generaBBDD();
 		}
-		
-	 
+
 		aniadirUsuario = new NativeButton("Añadir Usuario");
 		aniadirUsuario.setIcon(FontAwesome.PLUS);
-		
+		modificar = new NativeButton("modificar");
+		modificar.setIcon(FontAwesome.PENCIL);
+
 		gridUsuarios = new Grid();
 		gridUsuarios.setWidth(1000, Unit.PIXELS);
-		
-		
 		gridUsuarios.setColumns("nombre","password","rol","email");
-		gridUsuarios.addSelectionListener(e -> 
-		{		
-			usuario = null;
-			if (!e.getSelected().isEmpty() ) {
-				
-				usuario = (Usuario) e.getSelected().iterator().next();
-				detalleUsuario.setVisible(true);
-				aniadirUsuario.setVisible(false);
-				
-			} else{
-				
-				detalleUsuario.setVisible(false);
-				aniadirUsuario.setVisible(true);
-				
-			}
-			detalleUsuario.setUsuario(usuario);	
-		});
+		gridUsuarios.setFrozenColumnCount(1);
+		gridUsuarios.setSelectionMode(SelectionMode.NONE);
+
 		detalleUsuario = new UsuarioForm(this);
-	
+
 		aniadirUsuario.addClickListener(e->{	
 			aniadirUsuario.setVisible(false);
+			modificar.setVisible(false);
 			aniadirUsuarios();
 		});
-	
-		
-		cargaGridUsuarios(null);
-		gridUsuarios.setFrozenColumnCount(1);
-		gridUsuarios.setSelectionMode(SelectionMode.SINGLE);	
-		
-		addComponents(gridUsuarios,aniadirUsuario,detalleUsuario);
-		
+
+		modificar.addClickListener(e->{
+
+			listaUsuarios = usuarioService.listarUsuario();
+			for(Usuario user :listaUsuarios){	
+				listaNombres.add(user.getNombre());
+			}
+			usuarios = new ComboBox("Nombre",listaNombres);
+			usuarios.setInputPrompt("Seleccione usuario a madificar");
+			usuarios.setNullSelectionAllowed(false);
+			usuarios.select(1);
+			usuarios.setImmediate(true);
+			usuarios.setWidth(300, Unit.PIXELS);
+
+			aniadirUsuario.setVisible(false);
+			modificar.setVisible(false);
+			usuarios.setVisible(true);
+
+			extra.addComponent(usuarios);
+
+			usuarios.addValueChangeListener(a->{
+
+
+				for(Usuario user :listaUsuarios){
+					if(usuarios.getValue()==(user.getNombre())){
+						detalleUsuario.setVisible(true);
+						detalleUsuario.setUsuario(user);	
+					}					
+				}		
+			});
+
+		});
+
+		vertical.addComponents(aniadirUsuario,modificar,extra,detalleUsuario);
+		addComponents(gridUsuarios,vertical);
+
+		cargaGridUsuarios(null);	
 	}
 	private void aniadirUsuarios() {	
-		
-		detalleUsuario.setVisible(true);		
-		Usuario u = new Usuario("","",null,"");
+		detalleUsuario.setVisible(true);
+		Usuario u = new Usuario("","","","");
 		detalleUsuario.setUsuario(u);
 		gridUsuarios.setContainerDataSource(
-				new BeanItemContainer<>(Usuario.class, usuarioService.listarUsuario())
+				new BeanItemContainer<>(Usuario.class, listaUsuarios)
 				);
 	}
-	
-	public void cargaGridUsuarios(Usuario usuario) {
+
+	public void cargaGridUsuarios(Usuario user) {
+		modificar.setVisible(true);
 		aniadirUsuario.setVisible(true);
+
 		detalleUsuario.setVisible(false);
-		if(usuario != null){
-			usuarioService.modificarUsuario(usuario);
-		}		
+		usuarios.setVisible(false);
+
+		if(user != null){
+			usuarioService.modificarUsuario(user);
+		}	
+
+		listaUsuarios= usuarioService.listarUsuario();
+
 		gridUsuarios.setContainerDataSource(
-				new BeanItemContainer<>(Usuario.class, usuarioService.listarUsuario())
+				new BeanItemContainer<>(Usuario.class, listaUsuarios)
 				);
-		detalleUsuario.setUsuario(null);		
-		}
-	
+		detalleUsuario.setUsuario(null);
 	}
+}

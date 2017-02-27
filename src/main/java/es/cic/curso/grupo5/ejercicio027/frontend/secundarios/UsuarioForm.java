@@ -28,10 +28,10 @@ public class UsuarioForm extends FormLayout {
 	protected ComboBox roles;
 	
 	private NativeButton confirmar;
-	private NativeButton cancelar;
-	
+	private NativeButton cancelar;	
 	private Usuario usuario;
-
+ 
+	
 	@SuppressWarnings("unused")
 	private GestionUsuarios padre;
 	
@@ -41,10 +41,12 @@ public class UsuarioForm extends FormLayout {
 		final HorizontalLayout horizontal1 = new HorizontalLayout();
 		final HorizontalLayout horizontal2 = new HorizontalLayout();
 		final HorizontalLayout horizontal3 = new HorizontalLayout();
-		final HorizontalLayout horizontal4 = new HorizontalLayout();
+		final HorizontalLayout espacio = new HorizontalLayout();
+		final HorizontalLayout horizontal5 = new HorizontalLayout();
 		horizontal1.setSpacing(true);
 		horizontal2.setSpacing(true);
 		horizontal3.setSpacing(true);
+		horizontal5.setSpacing(true);
 
 		List<String> listaRoles = new ArrayList<>();
 		listaRoles.add("administrador");
@@ -67,12 +69,13 @@ public class UsuarioForm extends FormLayout {
 		roles.setImmediate(true);
 		roles.setWidth(300, Unit.PIXELS);
 		
-		confirmar = new NativeButton("Registrar/Actualizar");
+		confirmar = new NativeButton("Registrar/modificar");
 		confirmar.setIcon(FontAwesome.SAVE);
 
 		cancelar = new NativeButton("Cancelar");
 		cancelar.setIcon(FontAwesome.REPLY);
-	 					
+	 
+	
 		confirmar.addClickListener(e->{
 			if(roles.getValue()==null||nombre.getValue().equals("")|| password.getValue().equals("") || email.getValue().equals(""))
 			{	
@@ -80,19 +83,14 @@ public class UsuarioForm extends FormLayout {
 				mostrarNotificacion(sample);	
 			}else{
 				Notification notificacionOperacion = 
-						new Notification("El usuario : "+ nombre.getValue()+" ha sido dado de alta / actualizado");
+						new Notification("El usuario : "+ nombre.getValue()+" ha sido dado de alta/modificado");
 				
 				mostrarNotificacion(notificacionOperacion);
 				padre.cargaGridUsuarios(usuario);
-		
 			}
 		});
 
 		cancelar.addClickListener(e->{
-
-			nombre.clear();
-			password.clear();
-			email.clear();
 		padre.cargaGridUsuarios(null);
 
 		});
@@ -100,7 +98,8 @@ public class UsuarioForm extends FormLayout {
 		horizontal1.addComponents(nombre, password);
 		horizontal2.addComponents(roles);
 		horizontal3.addComponents(email);
-		addComponents(horizontal1,horizontal2,horizontal3,horizontal4,confirmar,cancelar);	
+		horizontal5.addComponents(confirmar,cancelar);
+		addComponents(horizontal1,horizontal2,horizontal3,espacio,horizontal5);	
 
 		setUsuario(null);	
 	}

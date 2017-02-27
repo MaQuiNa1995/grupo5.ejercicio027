@@ -7,11 +7,13 @@ import org.springframework.web.context.ContextLoader;
 
 import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.PropertyId;
+import com.vaadin.server.ExternalResource;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Link;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
@@ -85,6 +87,9 @@ public class HistoricoForm extends FormLayout {
 			listaMinutos.add(String.valueOf(i));
 		}
 		
+        Link refresco = new Link("Actualizar Usuarios", new ExternalResource(
+                "http://localhost:8080"));
+        
 		nombreUser = new ComboBox("Nombre",listaNombres);
 		nombreUser.setNullSelectionAllowed(false);
 		nombreUser.select(1);
@@ -168,7 +173,7 @@ public class HistoricoForm extends FormLayout {
 
 		});
 
-		horizontal1.addComponents(nombreUser);
+		horizontal1.addComponents(nombreUser,refresco);
 		horizontal2.addComponents(operacion);
 		horizontal3.addComponents(horas,minutos);
 		addComponents(horizontal1,horizontal2,horizontal3,horizontal4,confirmar,cancelar);	

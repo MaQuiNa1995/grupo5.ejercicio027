@@ -150,9 +150,15 @@ public class GestionUsuarios extends HorizontalLayout {
 		
 
 		listaUsuarios= usuarioService.listarUsuario();
+		
+		List<Usuario> listaUsuariosActivos = new ArrayList<>();
+		
+		for (Usuario usuariosActivos : listaUsuarios) {
+			listaUsuariosActivos.add(usuariosActivos);
+		}
 
 		gridUsuarios.setContainerDataSource(
-				new BeanItemContainer<>(Usuario.class, listaUsuarios)
+				new BeanItemContainer<>(Usuario.class, listaUsuariosActivos)
 				);
 		detalleUsuario.setUsuario(null);
 	}

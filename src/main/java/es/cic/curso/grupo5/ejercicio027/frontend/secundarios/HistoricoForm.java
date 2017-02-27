@@ -93,16 +93,6 @@ public class HistoricoForm extends FormLayout {
 		for(int i =10;i<60;i++){
 			listaMinutos.add(String.valueOf(i));
 		}
-		
- 
-        
-      //  actualizar = new NativeButton("Pulse para seleccionar usuario");
-        
-      //  actualizar.addClickListener(e->{
-        	
-        	//actualizar.setVisible(false);
-        	    	
-       
         
         
 		operacion = new ComboBox("Operación",listaOperaciones);
@@ -164,6 +154,7 @@ public class HistoricoForm extends FormLayout {
 
 
 			nombreUser.clear();
+			nombreUser.setVisible(false);
 			horas.clear();
 			minutos.clear();
 			padre.cargaHistoricos(null);

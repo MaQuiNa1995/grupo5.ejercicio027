@@ -80,6 +80,7 @@ public class GestionHistoricos  extends HorizontalLayout {
 		
 		aniadirHistorico.addClickListener(e->{	
 			aniadirHistorico.setVisible(false);
+			detalleHistorico.atualizarUsuarios();
 			aniadirHistorico();
 		});
 		
@@ -93,7 +94,7 @@ public class GestionHistoricos  extends HorizontalLayout {
 	private void aniadirHistorico() {	
 		
 		detalleHistorico.setVisible(true);
-		detalleHistorico.getActualizar().setVisible(true);
+		//detalleHistorico.getActualizar().setVisible(true);
 		Historico h = new Historico("","",null);
 		detalleHistorico.setHistorico(h);
 		gridHistorico.setContainerDataSource(
@@ -107,7 +108,7 @@ public class GestionHistoricos  extends HorizontalLayout {
 
 		aniadirHistorico.setVisible(true);
 		detalleHistorico.setVisible(false);
-		detalleHistorico.getActualizar().setVisible(true);
+		//detalleHistorico.getActualizar().setVisible(true);
 		if(historico!=null){
 			
 			for(Usuario user: u){

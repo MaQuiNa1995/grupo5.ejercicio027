@@ -31,7 +31,7 @@ public class GestionHistoricos  extends HorizontalLayout {
 	private NativeButton aniadirHistorico;
 	Grid gridHistorico;
 	private HistoricoForm detalleHistorico;
-	private Historico historico; // se va a usar para eliminar y modificar
+	private Historico historico; 
 	private HistoricoDTO historicoDTO;
 	private HistoricoService historicoService;
 	@SuppressWarnings("unused")
@@ -105,7 +105,6 @@ public class GestionHistoricos  extends HorizontalLayout {
 
 		aniadirHistorico.setVisible(true);
 		detalleHistorico.setVisible(false);
-		//detalleHistorico.getActualizar().setVisible(true);
 		if(historico!=null){
 			
 			for(Usuario user: u){

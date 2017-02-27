@@ -43,10 +43,13 @@ public class UsuarioForm extends FormLayout {
 		final HorizontalLayout horizontal3 = new HorizontalLayout();
 		final HorizontalLayout espacio = new HorizontalLayout();
 		final HorizontalLayout horizontal5 = new HorizontalLayout();
+		
+		final HorizontalLayout horizontal6 = new HorizontalLayout();
 		horizontal1.setSpacing(true);
 		horizontal2.setSpacing(true);
 		horizontal3.setSpacing(true);
 		horizontal5.setSpacing(true);
+		horizontal6.setSpacing(true);
 
 		List<String> listaRoles = new ArrayList<>();
 		listaRoles.add("administrador");
@@ -94,11 +97,12 @@ public class UsuarioForm extends FormLayout {
 
 		});
 
-		horizontal1.addComponents(nombre, password);
+		horizontal1.addComponents(nombre);
+		horizontal6.addComponent(password);
 		horizontal2.addComponents(roles);
 		horizontal3.addComponents(email);
 		horizontal5.addComponents(confirmar,cancelar);
-		addComponents(horizontal1,horizontal2,horizontal3,espacio,horizontal5);	
+		addComponents(horizontal1,horizontal6,horizontal2,horizontal3,espacio,horizontal5);	
 
 		setUsuario(null);	
 	}

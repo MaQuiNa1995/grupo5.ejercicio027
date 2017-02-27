@@ -2,7 +2,9 @@ package es.cic.curso.grupo5.ejercicio027.frontend.secundarios;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.web.context.ContextLoader;
+
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.ui.ComboBox;
@@ -11,7 +13,6 @@ import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.VerticalLayout;
-
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 import es.cic.curso.grupo5.ejercicio027.backend.service.UsuarioService;
 import es.cic.curso.grupo5.ejercicio027.frontend.principal.MyUI;
@@ -69,6 +70,7 @@ public class GestionUsuarios extends HorizontalLayout {
 		modificar.addClickListener(e->{
 
 			listaUsuarios = usuarioService.listarUsuario();
+			listaNombres.clear();
 			for(Usuario user :listaUsuarios){	
 				listaNombres.add(user.getNombre());
 			}

@@ -13,9 +13,15 @@ import com.vaadin.ui.VerticalLayout;
 import es.cic.curso.grupo5.ejercicio027.frontend.secundarios.GestionHistoricos;
 import es.cic.curso.grupo5.ejercicio027.frontend.secundarios.GestionUsuarios;
 
+
+
 @Theme("mytheme")
 public class MyUI extends UI {
-	private static final long serialVersionUID = 1187671189585917081L;
+ 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6976946017365645736L;
 	private TabSheet pestania;
 
 	@Override
@@ -32,7 +38,7 @@ public class MyUI extends UI {
 		hlHistorico.setMargin(true);
 		hlHistorico.setSpacing(true);
 			
-		Label titulo = new Label("CONTROL DE ACCESOS");
+		Label titulo = new Label("CONTROL DE ACCESOS / PERMISOS");
 		pestania = new TabSheet();
 		pestania.setHeight(100.0f, Unit.PERCENTAGE);
 		pestania.addTab(hlHistorico, "HISTORICO");

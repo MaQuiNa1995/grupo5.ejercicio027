@@ -12,6 +12,7 @@ import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
@@ -23,7 +24,7 @@ public class UsuarioForm extends FormLayout {
 	@PropertyId("nombre")
 	private TextField nombre;
 	@PropertyId("password")
-	protected TextField password;
+	protected PasswordField password;
 	@PropertyId("email")
 	private TextField email;	
 	@PropertyId("rol")
@@ -58,7 +59,7 @@ public class UsuarioForm extends FormLayout {
 		nombre = new TextField("Nombre");
 		nombre.setWidth(300, Unit.PIXELS);
 		
-		password = new TextField("Password");
+		password = new PasswordField("Password");
 		password.setWidth(300, Unit.PIXELS);
 		
 		email = new TextField("Email");

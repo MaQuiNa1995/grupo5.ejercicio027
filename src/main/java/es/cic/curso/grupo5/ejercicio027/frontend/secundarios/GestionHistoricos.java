@@ -36,8 +36,8 @@ public class GestionHistoricos  extends HorizontalLayout {
 	private HistoricoService historicoService;
 	@SuppressWarnings("unused")
 	private MyUI padre;
-	@Autowired
-	private HistoricoConverter conv;
+
+	private HistoricoConverter conv = new HistoricoConverter();
 	private UsuarioService usuarioService;
 	private List<HistoricoDTO> listaHistoricos;
 	
@@ -96,91 +96,30 @@ private void aniadirHistorico() {
 				new BeanItemContainer<>(Historico.class, historicoService.listarHistorico())
 				);
 	}
-/*	public void cargaGridHistorico(Historico historico, Usuario u) { 
-		aniadirHistorico.setVisible(true);
-		detalleHistorico.setVisible(false);
-		if (historico != null){
-			historicoService.modificarHistorico(historico);
-		}	
-		
-		List<Historico> lista = historicoService.listarHistorico();
-		List<HistoricoDTO> listaHistorico = new ArrayList<>();
-		for(Historico h : lista){
-			HistoricoDTO d = new HistoricoDTO();
-			
-			System.out.println("uuuuuuuuuuuuuuuuuuuuuuuu"+u);
-			System.out.print(historico.getOperacion());
-			if(u!=null){
-				d = conv.entityToDto(historico,u);
-				System.out.print("dddddddd");
-				listaHistorico.add(d);
-			}
-		}
-		
-		gridHistorico.setContainerDataSource(
-        		new BeanItemContainer<>(HistoricoDTO.class, listaHistorico)
-        );
-		
-		
-		
-		
-		
-		//TODO pasarle la lista ordenada por hora
-		gridHistorico.setContainerDataSource(
-				new BeanItemContainer<>(Historico.class, historicoService.listarHistorico())
-				);
-		detalleHistorico.setHistorico(null);
-	}
-	*/
+
 	public void cargaHistoricos(Historico historico){	
-		
-		//System.out.println("aa"+historico);
+		List<Usuario> u = usuarioService.listarUsuario();
 		if(historico!=null){
-		
-		
-		List<Usuario> lista = usuarioService.listarUsuario();
-		
-		for(Usuario s : lista){
-			HistoricoDTO v = new HistoricoDTO();
-			
-			if(historico.getUsuario().getNombre().equals(s.getNombre())){
+			historicoService.modificarHistorico(historico);
+			listaHistoricos = new ArrayList<>();
+			List<Historico> lista = historicoService.listarHistorico();
+			for(Usuario user: u){
 				
-				
-				Usuario a = s;
-				
-				v = conv.entityToDto(historico, a);
-				System.out.print("bbbbbbbbbbbbbbbbbbbbbbbbb" + v); 
-				listaHistoricos.add(v);
-				
-				for(HistoricoDTO d: listaHistoricos){
-					System.out.println("LISTA :  "+ d);
+				if(historico.getUsuario().getNombre().equals(user.getNombre())){
+					HistoricoDTO d = new HistoricoDTO();
+					d = conv.entityToDto(historico, user);
+					listaHistoricos.add(d);
+
 				}
+				 
 			}
 		}
 		
 		
-		
-	}
 		gridHistorico.setContainerDataSource(
 	    		new BeanItemContainer<>(HistoricoDTO.class, listaHistoricos)
 	    );
 	}
-/*
-	List<HistoricoDTO> listaHistoricos = new ArrayList<>();
 
-	List<Usuario> listaUsuarios = usuarioService.listarUsuario();
-	
-	for(Usuario u : listaUsuarios){
-		
-			HistoricoDTO v = new HistoricoDTO();
-		if(historico!=null){	
-		if(historico.getNombre().equals(u.getNombre())){
-			v.setUsuario(u.getNombre());
-			listaHistoricos.add(v);
-		}}
-	}
-	gridHistorico.setContainerDataSource(
-    		new BeanItemContainer<>(HistoricoDTO.class, listaHistoricos)
-    );*/
 }
 

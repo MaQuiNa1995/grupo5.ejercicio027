@@ -9,7 +9,6 @@ import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 @Component
 public class HistoricoConverter {
 	public HistoricoDTO entityToDto(Historico historico, Usuario u) {
-		System.out.println("resultadooooo");
 		HistoricoDTO resultado = new HistoricoDTO();
 		resultado.setUsuario(u.getNombre());
 		resultado.setOperacion(historico.getOperacion());

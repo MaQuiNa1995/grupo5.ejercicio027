@@ -1,7 +1,10 @@
 package es.cic.curso.grupo5.ejercicio027.frontend.secundarios;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import org.springframework.web.context.ContextLoader;
 
@@ -9,9 +12,12 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
+import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
+import com.vaadin.ui.HasComponents;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.InlineDateField;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Notification;
 
@@ -57,8 +63,6 @@ public class HistoricoForm extends FormLayout {
 		historico = new Historico();
 		usuarioService = ContextLoader.getCurrentWebApplicationContext().getBean(UsuarioService.class);	
 		historicoService = ContextLoader.getCurrentWebApplicationContext().getBean(HistoricoService.class);	
-
-	
 
 		horizontal1 = new HorizontalLayout();
 		final HorizontalLayout horizontal2 = new HorizontalLayout();
@@ -113,8 +117,7 @@ public class HistoricoForm extends FormLayout {
 		minutos.setWidth(90, Unit.PIXELS);
 	 
 		
-		
-		
+
 		
 		confirmar = new NativeButton("Registrar histórico");
 		confirmar.setIcon(FontAwesome.SAVE);
@@ -214,11 +217,5 @@ public class HistoricoForm extends FormLayout {
 			BeanFieldGroup.bindFieldsUnbuffered(new Historico(), this);
 		}
 	}
-	public NativeButton getActualizar() {
-		return actualizar;
-	}
-	public void setActualizar(NativeButton actualizar) {
-		this.actualizar = actualizar;
-	}
-	 
+
 }

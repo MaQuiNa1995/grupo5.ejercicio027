@@ -94,7 +94,7 @@ public class GestionHistoricos  extends HorizontalLayout {
 		Historico h = new Historico("","",null);
 		detalleHistorico.setHistorico(h);
 		gridHistorico.setContainerDataSource(
-				new BeanItemContainer<>(Historico.class, historicoService.listarHistorico())
+				new BeanItemContainer<>(HistoricoDTO.class, listaHistoricos)
 				);
 	}
 

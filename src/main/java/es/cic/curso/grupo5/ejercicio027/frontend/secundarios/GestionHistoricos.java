@@ -1,16 +1,21 @@
 package es.cic.curso.grupo5.ejercicio027.frontend.secundarios;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 import org.springframework.web.context.ContextLoader;
 
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.InlineDateField;
 import com.vaadin.ui.NativeButton;
 
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico;
@@ -52,7 +57,7 @@ public class GestionHistoricos  extends HorizontalLayout {
 		gridHistorico = new Grid();
 		
 		gridHistorico.setWidth(1000, Unit.PIXELS);
- 
+		
 		
 		gridHistorico.setColumns("usuario","operacion","hora");
 		gridHistorico.addSelectionListener(e -> 
@@ -105,7 +110,6 @@ public class GestionHistoricos  extends HorizontalLayout {
 
 		aniadirHistorico.setVisible(true);
 		detalleHistorico.setVisible(false);
-		//detalleHistorico.getActualizar().setVisible(true);
 		if(historico!=null){
 			
 			for(Usuario user: u){

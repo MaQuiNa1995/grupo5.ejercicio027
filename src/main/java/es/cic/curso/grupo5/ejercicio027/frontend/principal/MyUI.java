@@ -6,7 +6,9 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
+
 import com.vaadin.ui.HorizontalLayout;
+
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.UI;
@@ -25,14 +27,15 @@ public class MyUI extends UI {
 	 */
 	private static final long serialVersionUID = 6976946017365645736L;
 	private TabSheet pestania;
+	private VerticalLayout layout;
 
 	@Override
 	protected void init(VaadinRequest vaadinRequest) {
-
-		final VerticalLayout layout = new VerticalLayout();
+		layout = new VerticalLayout();
 		layout.setMargin(true);
 		layout.setSpacing(true);
 		layout.setWidth("100%");
+
 		final HorizontalLayout hlUsuarios = new GestionUsuarios(this);
 		hlUsuarios.setMargin(true);
 		hlUsuarios.setSpacing(true);
@@ -47,8 +50,10 @@ public class MyUI extends UI {
 		pestania.addTab(hlUsuarios, "USUARIOS");
 
 		layout.addComponents(titulo,pestania);	
-		setContent(layout);						
+		setContent(layout);
 	}
+	
+
  
 	   @WebServlet(urlPatterns = "/*", name = "MyUIServlet", asyncSupported = true)
 	    @VaadinServletConfiguration(ui = MyUI.class, productionMode = false)

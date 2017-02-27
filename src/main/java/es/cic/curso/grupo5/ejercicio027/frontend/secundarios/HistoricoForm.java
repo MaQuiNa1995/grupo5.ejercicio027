@@ -53,11 +53,11 @@ public class HistoricoForm extends FormLayout {
 
 	public HistoricoForm(GestionHistoricos padre) {
 		this.padre = padre;
-
+		historico = new Historico();
 		usuarioService = ContextLoader.getCurrentWebApplicationContext().getBean(UsuarioService.class);	
 		historicoService = ContextLoader.getCurrentWebApplicationContext().getBean(HistoricoService.class);	
 
-		
+	
 
 		final HorizontalLayout horizontal1 = new HorizontalLayout();
 		final HorizontalLayout horizontal2 = new HorizontalLayout();
@@ -154,13 +154,9 @@ public class HistoricoForm extends FormLayout {
 					}
 				}
 				historico.setHora(horas.getValue() +":"+minutos.getValue());
-
-				// Christian: Intento de linkar DTOal grid
-//				Usuario usuario = new Usuario(nombreUser.getValue().toString(), "", "Administrador", "");
-//				Historico historico = new Historico(operacion.getValue().toString(),
-//						horas.getValue().toString()+":"+minutos.getValue().toString(),usuario);
-//				Da error porque el container de historico no tiene un campo nombre
 				historicoService.aniadirHistorico(historico);
+			
+				
 				Notification notificacionOperacion = new Notification(nombreUser.getValue()+""
 						+ "realizo la operacion de: "+operacion.getValue());
 				
@@ -169,25 +165,28 @@ public class HistoricoForm extends FormLayout {
 				horas.clear();
 				minutos.clear();
 				padre.cargaHistoricos(historico);
+				operacion.clear();
+				setHistorico(null);
 			}
 		});
 
 		cancelar.addClickListener(e->{
 
 			nombreUser.clear();
-			operacion.clear();
 			horas.clear();
 			minutos.clear();
 			padre.cargaHistoricos(null);
+			operacion.clear();
 
 		});
 
 		horizontal1.addComponents(nombreUser,refresco);
 		horizontal2.addComponents(operacion);
 		horizontal3.addComponents(horas,minutos);
+		
 		addComponents(horizontal1,horizontal2,horizontal3,horizontal4,confirmar,cancelar);	
 
-		setHistorico(null);	
+		
 	}
 	private void mostrarNotificacion(Notification notificacion) {
 		notificacion.setDelayMsec(2000);

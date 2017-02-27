@@ -33,13 +33,14 @@ public class GestionHistoricos  extends HorizontalLayout {
 	Grid gridHistorico;
 	private HistoricoForm detalleHistorico;
 	private Historico historico; // se va a usar para eliminar y modificar
+	private HistoricoDTO historicoDTO;
 	private HistoricoService historicoService;
 	@SuppressWarnings("unused")
 	private MyUI padre;
 
 	private HistoricoConverter conv = new HistoricoConverter();
 	private UsuarioService usuarioService;
-	private List<HistoricoDTO> listaHistoricos;
+	private List<HistoricoDTO> listaHistoricos = new ArrayList<>();;
 	
 	public GestionHistoricos(MyUI padre){
 		this.padre = padre;
@@ -57,10 +58,10 @@ public class GestionHistoricos  extends HorizontalLayout {
 		gridHistorico.setColumns("usuario","operacion","hora");
 		gridHistorico.addSelectionListener(e -> 
 		{		
-			historico = null;
+			historicoDTO = null;
 			if (!e.getSelected().isEmpty() ) {
 				
-				historico = (Historico) e.getSelected().iterator().next();
+				historicoDTO = (HistoricoDTO) e.getSelected().iterator().next();
 				detalleHistorico.setVisible(true);
 				aniadirHistorico.setVisible(false);
 				
@@ -87,7 +88,7 @@ public class GestionHistoricos  extends HorizontalLayout {
 		addComponents(gridHistorico,aniadirHistorico,detalleHistorico);
 		
 	}
-private void aniadirHistorico() {	
+	private void aniadirHistorico() {	
 		
 		detalleHistorico.setVisible(true);		
 		Historico h = new Historico("","",null);
@@ -99,10 +100,17 @@ private void aniadirHistorico() {
 
 	public void cargaHistoricos(Historico historico){	
 		List<Usuario> u = usuarioService.listarUsuario();
+		aniadirHistorico.setVisible(true);
+		detalleHistorico.setVisible(false);
+		if(!listaHistoricos.isEmpty()){
+			//listaHistoricos.clear();
+			//listaHistoricos = conv.entity2DTO(historicoService.listarHistorico(), usuarioService.listarUsuario());
+		}
+		
 		if(historico!=null){
-			historicoService.modificarHistorico(historico);
-			listaHistoricos = new ArrayList<>();
-			List<Historico> lista = historicoService.listarHistorico();
+			//historicoService.modificarHistorico(historico);
+			
+
 			for(Usuario user: u){
 				
 				if(historico.getUsuario().getNombre().equals(user.getNombre())){
@@ -114,7 +122,7 @@ private void aniadirHistorico() {
 				 
 			}
 		}
-		
+	
 		
 		gridHistorico.setContainerDataSource(
 	    		new BeanItemContainer<>(HistoricoDTO.class, listaHistoricos)

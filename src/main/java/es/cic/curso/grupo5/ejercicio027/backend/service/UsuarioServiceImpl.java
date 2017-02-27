@@ -46,7 +46,7 @@ public class UsuarioServiceImpl implements UsuarioService{
     public void generaBBDD(){
     	
     	Usuario usuario1 = new Usuario("Juan González del Olmo", "juan", "administrador", "juan@hotmail.com",true);
-		Usuario usuario2 = new Usuario("Jose Giménez Sánchez", "pepe", "invitado", "pepe@hotmail.com",false);
+		Usuario usuario2 = new Usuario("Jose Giménez Sánchez", "pepe", "invitado", "pepe@hotmail.com",true);
 		Usuario usuario3 = new Usuario("Pedro de la torre García", "pedro", "supervisor", "pedro@hotmail.com",true);
 		Usuario usuario4 = new Usuario("María Suarez Fernandez", "mery", "editor", "laMery@hotmail.com",true);
 		

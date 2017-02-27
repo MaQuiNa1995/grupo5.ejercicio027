@@ -176,8 +176,9 @@ public class HistoricoForm extends FormLayout {
 		listaUsuarios = usuarioService.listarUsuario();
 		listaNombres.clear();
 		for(Usuario user :listaUsuarios){	
-			
+			if(user.isActivo()){
 			listaNombres.add(user.getNombre());
+			}
 		}
 		
 		nombreUser = new ComboBox("Nombre",listaNombres);

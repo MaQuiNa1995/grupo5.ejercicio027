@@ -78,8 +78,12 @@ public class GestionUsuarios extends HorizontalLayout {
 
 			listaUsuarios = usuarioService.listarUsuario();
 			listaNombres.clear();
-			for(Usuario user :listaUsuarios){	
+			for(Usuario user :listaUsuarios){
+				
+				if(user.isActivo()){
+				
 				listaNombres.add(user.getNombre());
+				}
 			}
 			usuarios = new ComboBox("Nombre",listaNombres);
 			usuarios.setInputPrompt("Seleccione usuario a madificar");
@@ -113,13 +117,9 @@ public class GestionUsuarios extends HorizontalLayout {
 				cancelar.setVisible(false);
 				aniadirUsuario.setVisible(true);
 				modificar.setVisible(true);
-				
-				
+							
 			});
-			
-			
-			
-			
+						
 		});
 
 		vertical.addComponents(aniadirUsuario,modificar,extra,detalleUsuario);
@@ -129,11 +129,11 @@ public class GestionUsuarios extends HorizontalLayout {
 	}
 	private void aniadirUsuarios() {	
 		detalleUsuario.setVisible(true);
-		Usuario u = new Usuario("","","","",false);
+		Usuario u = new Usuario("","","","",true);
 		detalleUsuario.setUsuario(u);
-		gridUsuarios.setContainerDataSource(
-				new BeanItemContainer<>(Usuario.class, listaUsuarios)
-				);
+//		gridUsuarios.setContainerDataSource(
+//				new BeanItemContainer<>(Usuario.class, listaUsuarios)
+//				);
 	}
 
 	public void cargaGridUsuarios(Usuario user) {
@@ -146,15 +146,16 @@ public class GestionUsuarios extends HorizontalLayout {
 		if(user != null){
 			usuarioService.modificarUsuario(user);
 		}	
-		
-		
+
+
 
 		listaUsuarios= usuarioService.listarUsuario();
-		
+
 		List<Usuario> listaUsuariosActivos = new ArrayList<>();
-		
 		for (Usuario usuariosActivos : listaUsuarios) {
-			listaUsuariosActivos.add(usuariosActivos);
+
+			if(usuariosActivos.isActivo())
+				listaUsuariosActivos.add(usuariosActivos);
 		}
 
 		gridUsuarios.setContainerDataSource(

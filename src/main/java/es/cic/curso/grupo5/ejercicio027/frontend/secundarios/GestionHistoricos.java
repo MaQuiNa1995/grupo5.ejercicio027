@@ -65,6 +65,7 @@ public class GestionHistoricos  extends HorizontalLayout {
 				historicoDTO = (HistoricoDTO) e.getSelected().iterator().next();
 				detalleHistorico.setVisible(true);
 				aniadirHistorico.setVisible(false);
+				detalleHistorico.atualizarUsuarios();
 				
 			} else{
 				

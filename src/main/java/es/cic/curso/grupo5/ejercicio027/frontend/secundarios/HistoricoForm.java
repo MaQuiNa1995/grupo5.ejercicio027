@@ -47,6 +47,7 @@ public class HistoricoForm extends FormLayout {
 	private ComboBox nombreUser=new ComboBox();
 	private Historico historico;
 	private List<Usuario> listaUsuarios;
+	private final HorizontalLayout horizontal1;
  
 	private HistoricoService historicoService;
  
@@ -62,7 +63,7 @@ public class HistoricoForm extends FormLayout {
 
 	
 
-		final HorizontalLayout horizontal1 = new HorizontalLayout();
+		horizontal1 = new HorizontalLayout();
 		final HorizontalLayout horizontal2 = new HorizontalLayout();
 		final HorizontalLayout horizontal3 = new HorizontalLayout();
 		final HorizontalLayout horizontal4 = new HorizontalLayout();
@@ -95,38 +96,13 @@ public class HistoricoForm extends FormLayout {
 		
  
         
-        actualizar = new NativeButton("Pulse para seleccionar usuario");
+      //  actualizar = new NativeButton("Pulse para seleccionar usuario");
         
-        actualizar.addClickListener(e->{
+      //  actualizar.addClickListener(e->{
         	
-        	actualizar.setVisible(false);
-        	listaUsuarios = usuarioService.listarUsuario();
-        	listaNombres.clear();
-    		for(Usuario user :listaUsuarios){	
-    			
-    			listaNombres.add(user.getNombre());
-     		}
-    		
-    		nombreUser = new ComboBox("Nombre",listaNombres);
-    		nombreUser.setNullSelectionAllowed(false);
-    		nombreUser.select(1);
-    		nombreUser.setImmediate(true);
-    		nombreUser.setInputPrompt("seleccione usuario");
-    		nombreUser.setWidth(300, Unit.PIXELS);
-    		
-    		nombreUser.addValueChangeListener(a->{
-    			for(Usuario user :listaUsuarios){
-    				if(nombreUser.getValue()==(user.getNombre())){
-    					Notification sample = new Notification("Usuario con permisos de : "+user.getRol());
-    					mostrarNotificacion(sample);
-    					historico.setUsuario(user);
-    				}
-    			}			
-    		});
-    		
-    		horizontal1.addComponent(nombreUser);
-    		        	
-        });
+        	//actualizar.setVisible(false);
+        	    	
+       
         
         
 		operacion = new ComboBox("Operación",listaOperaciones);
@@ -199,10 +175,37 @@ public class HistoricoForm extends FormLayout {
 		horizontal3.addComponents(horas,minutos);
 	
 
-		addComponents(actualizar,horizontal1,horizontal2,horizontal3,horizontal4,confirmar,cancelar);	
+		addComponents(horizontal1,horizontal2,horizontal3,horizontal4,confirmar,cancelar);	
 
 
 		
+	}
+	public void atualizarUsuarios() {
+		listaUsuarios = usuarioService.listarUsuario();
+		listaNombres.clear();
+		for(Usuario user :listaUsuarios){	
+			
+			listaNombres.add(user.getNombre());
+		}
+		
+		nombreUser = new ComboBox("Nombre",listaNombres);
+		nombreUser.setNullSelectionAllowed(false);
+		nombreUser.select(1);
+		nombreUser.setImmediate(true);
+		nombreUser.setInputPrompt("seleccione usuario");
+		nombreUser.setWidth(300, Unit.PIXELS);
+		
+		nombreUser.addValueChangeListener(a->{
+			for(Usuario user :listaUsuarios){
+				if(nombreUser.getValue()==(user.getNombre())){
+					Notification sample = new Notification("Usuario con permisos de : "+user.getRol());
+					mostrarNotificacion(sample);
+					historico.setUsuario(user);
+				}
+			}			
+		});
+		
+		horizontal1.addComponent(nombreUser);
 	}
 	private void mostrarNotificacion(Notification notificacion) {
 		notificacion.setDelayMsec(2000);

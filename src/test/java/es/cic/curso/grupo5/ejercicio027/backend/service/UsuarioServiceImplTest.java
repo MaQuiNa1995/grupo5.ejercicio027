@@ -65,7 +65,7 @@ public class UsuarioServiceImplTest {
 
 	@Test
 	public void testBorrarUsuario() {
-		Usuario usuarioABorrar = new Usuario("juan", "juan", "administrador", "juan@hotmail.com");
+		Usuario usuarioABorrar = new Usuario("juan", "juan", "administrador", "juan@hotmail.com",true);
 		usuarioService.aniadirUsuario(usuarioABorrar);
 		usuarioService.borrarUsuario(usuarioABorrar.getId());
 		List<Usuario> listaUsuario = usuarioService.listarUsuario();
@@ -82,9 +82,9 @@ public class UsuarioServiceImplTest {
 	}
 	
 	private void inicializaBaseDeDatos() {
-		usuario1 = new Usuario("juan", "juan", "administrador", "juan@hotmail.com");
-		usuario2 = new Usuario("pepe", "pepe", "invitado", "pepe@hotmail.com");
-		usuario3 = new Usuario("pedro", "pedro", "inivitado", "pedro@hotmail.com");
+		usuario1 = new Usuario("juan", "juan", "administrador", "juan@hotmail.com",true);
+		usuario2 = new Usuario("pepe", "pepe", "invitado", "pepe@hotmail.com",true);
+		usuario3 = new Usuario("pedro", "pedro", "inivitado", "pedro@hotmail.com",true);
 
 		entityManager.persist(usuario1);
 		entityManager.persist(usuario2);

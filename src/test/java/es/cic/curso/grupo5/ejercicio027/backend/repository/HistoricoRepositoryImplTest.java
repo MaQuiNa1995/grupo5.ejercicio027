@@ -26,11 +26,11 @@ public class HistoricoRepositoryImplTest extends AbstractRepositoryImplTest<Long
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        usuario = new Usuario("Christian","curso18","Admin","maquina1995@gmail.com");
+        usuario = new Usuario("Christian","curso18","Admin","maquina1995@gmail.com",false);
         em.persist(usuario);
-        usuario2 = new Usuario("Christian2","curso18","Admin","maquina1995@gmail.com");
+        usuario2 = new Usuario("Christian2","curso18","Admin","maquina1995@gmail.com",true);
         em.persist(usuario2);
-        usuario3 = new Usuario("Christian3","curso18","Admin","maquina1995@gmail.com");
+        usuario3 = new Usuario("Christian3","curso18","Admin","maquina1995@gmail.com",true);
         em.persist(usuario3);
     }
 

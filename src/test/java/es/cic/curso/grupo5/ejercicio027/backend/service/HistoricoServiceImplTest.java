@@ -82,9 +82,9 @@ public class HistoricoServiceImplTest {
 	
 	private void inicializaBaseDeDatos() {
 		
-		usuario1 = new Usuario("juan", "juan", "administrador", "juan@hotmail.com");
-		usuario2 = new Usuario("pepe", "pepe", "invitado", "pepe@hotmail.com");
-		usuario3 = new Usuario("pedro", "pedro", "inivitado", "pedro@hotmail.com");
+		usuario1 = new Usuario("juan", "juan", "administrador", "juan@hotmail.com",true);
+		usuario2 = new Usuario("pepe", "pepe", "invitado", "pepe@hotmail.com",true);
+		usuario3 = new Usuario("pedro", "pedro", "inivitado", "pedro@hotmail.com",true);
 
 		entityManager.persist(usuario1);
 		entityManager.persist(usuario2);

@@ -109,8 +109,9 @@ public class UsuarioForm extends FormLayout {
 					"".equals(email.getValue());
 			
 			boolean bienEscrito=
-					v.validarNombreApellidos(nombre.getValue())||
-					v.validarEmail(email.getValue())||
+					roles.getValue()==null &&
+					v.validarNombreApellidos(nombre.getValue())&&
+					v.validarEmail(email.getValue())&&
 					v.validarLongitudTexto(password.getValue());
 			
 			
@@ -125,7 +126,21 @@ public class UsuarioForm extends FormLayout {
 				padre.cargaGridUsuarios(usuario);
 
 			} else {
-				Notification notificacionCampoMalEscrito = new Notification("Rellene todos los campos");
+				String camposMal="Los Siguientes Campos Están Mal Escritos o Imcompletos Recuerde Que El Limite De Carácteres Es 50: ";
+				
+				if(!v.validarNombreApellidos(nombre.getValue()))
+					camposMal = camposMal.concat("Nombre ");
+				
+				if(!v.validarEmail(email.getValue()))
+					camposMal = camposMal.concat("Email ");
+					
+				if(!v.validarLongitudTexto(password.getValue()))
+					camposMal = camposMal.concat("Contraseña ");
+				
+				if(roles.getValue()==null)
+					camposMal = camposMal.concat("Roles ");
+				
+				Notification notificacionCampoMalEscrito = new Notification(camposMal);
 				mostrarNotificacion(notificacionCampoMalEscrito);
 			}
 		});

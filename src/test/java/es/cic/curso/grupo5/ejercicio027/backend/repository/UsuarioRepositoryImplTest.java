@@ -21,17 +21,21 @@ public class UsuarioRepositoryImplTest extends AbstractRepositoryImplTest<Long, 
     private UsuarioRepository sut;
 
     private Rol rol;
+    private Operacion operacion;
     @Before
     @Override
     public void setUp() throws Exception {
-        super.setUp();
+    	 super.setUp();
+    	operacion = new Operacion("Copiar");
+    	em.persist(operacion);
+    	rol = new Rol("invitado", operacion);
+    	em.persist(rol);
+       
         
     }
 
     @Override
     public Usuario getInstanceDeTParaNuevo() {
-    	operacion = new Operacion("Copiar");
-    	rol = new Rol("invitado", operacion);
     	
         Usuario claseUsuario = new Usuario();
         claseUsuario.setNombre("Christian");
@@ -44,9 +48,6 @@ public class UsuarioRepositoryImplTest extends AbstractRepositoryImplTest<Long, 
 
     @Override
     public Usuario getInstanceDeTParaLectura() {
-    	
-    	operacion = new Operacion("Copiar");
-    	rol = new Rol("invitado", operacion);
     	
         Usuario claseUsuario = new Usuario();
         claseUsuario.setNombre("Christian");

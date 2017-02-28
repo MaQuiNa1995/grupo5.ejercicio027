@@ -31,7 +31,8 @@ public class HistoricoRepositoryImplTest extends AbstractRepositoryImplTest<Long
         super.setUp();
         operacion = new Operacion("Copiar");
         rol = new Rol("administrador", operacion);
-        
+        em.persist(operacion);
+        em.persist(rol);
         usuario = new Usuario("Christian","curso18",rol,"maquina1995@gmail.com",false);
         em.persist(usuario);
         usuario2 = new Usuario("Christian2","curso18",rol,"maquina1995@gmail.com",true);

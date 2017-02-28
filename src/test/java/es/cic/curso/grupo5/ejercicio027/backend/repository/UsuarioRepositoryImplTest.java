@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Rol;
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Operacion;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -18,20 +20,23 @@ public class UsuarioRepositoryImplTest extends AbstractRepositoryImplTest<Long, 
     @Autowired
     private UsuarioRepository sut;
 
+    private Rol rol;
     @Before
     @Override
     public void setUp() throws Exception {
         super.setUp();
+        
     }
 
     @Override
     public Usuario getInstanceDeTParaNuevo() {
+    	operacion = new Operacion("Copiar");
+    	rol = new Rol("invitado", operacion);
     	
         Usuario claseUsuario = new Usuario();
-        
         claseUsuario.setNombre("Christian");
         claseUsuario.setPassword("curso18");
-        claseUsuario.setRol("Administrador");
+        claseUsuario.setRol(rol);
         claseUsuario.setEmail("maquina1995@gmail.com");
         
         return claseUsuario;
@@ -40,13 +45,15 @@ public class UsuarioRepositoryImplTest extends AbstractRepositoryImplTest<Long, 
     @Override
     public Usuario getInstanceDeTParaLectura() {
     	
+    	operacion = new Operacion("Copiar");
+    	rol = new Rol("invitado", operacion);
+    	
         Usuario claseUsuario = new Usuario();
-        
         claseUsuario.setNombre("Christian");
         claseUsuario.setPassword("curso18");
-        claseUsuario.setRol("Administrador");
+        claseUsuario.setRol(rol);
         claseUsuario.setEmail("maquina1995@gmail.com");
-
+        
         return claseUsuario;
     }
 
@@ -61,7 +68,7 @@ public class UsuarioRepositoryImplTest extends AbstractRepositoryImplTest<Long, 
         claseUsuario.setId(clave);
         claseUsuario.setNombre("Christian");
         claseUsuario.setPassword("curso18");
-        claseUsuario.setRol("Administrador");
+        claseUsuario.setRol(rol);
         claseUsuario.setEmail("maquina1995@gmail.com");
         return claseUsuario;
     }

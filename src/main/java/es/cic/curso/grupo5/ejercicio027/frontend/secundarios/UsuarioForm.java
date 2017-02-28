@@ -18,6 +18,7 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
+import es.cic.curso.grupo5.ejercicio027.frontend.utilities.Validador;
 
 public class UsuarioForm extends FormLayout {
 	 
@@ -98,16 +99,34 @@ public class UsuarioForm extends FormLayout {
 			
 	
 		confirmar.addClickListener(e->{
-			if(roles.getValue()==null||"".equals(nombre.getValue())|| "".equals(password.getValue()) || "".equals(email.getValue())){
-				Notification sample = new Notification("Rellene todos los campos");
-				mostrarNotificacion(sample);	
-			}else{
+			
+			Validador v = new Validador();
+			
+			boolean noNulo=
+					roles.getValue()==null||
+					"".equals(nombre.getValue())||
+					"".equals(password.getValue())||
+					"".equals(email.getValue());
+			
+			boolean bienEscrito=
+					v.validarNombreApellidos(nombre.getValue())||
+					v.validarEmail(email.getValue())||
+					v.validarLongitudTexto(password.getValue());
+			
+			
+			if(noNulo){
+				Notification notificacionRellenaTodo = new Notification("Rellene todos los campos");
+				mostrarNotificacion(notificacionRellenaTodo);	
+			}else if (bienEscrito){
 				Notification notificacionOperacion = 
 						new Notification("El usuario : "+ nombre.getValue()+" ha sido dado de alta/modificado");
 				
 				mostrarNotificacion(notificacionOperacion);
 				padre.cargaGridUsuarios(usuario);
 
+			} else {
+				Notification notificacionCampoMalEscrito = new Notification("Rellene todos los campos");
+				mostrarNotificacion(notificacionCampoMalEscrito);
 			}
 		});
 
@@ -127,9 +146,9 @@ public class UsuarioForm extends FormLayout {
 
 		setUsuario(null);	
 	}
-	private void mostrarNotificacion(Notification notificacion) {
-		notificacion.setDelayMsec(2000);
-		notificacion.show(Page.getCurrent());
+	private void mostrarNotificacion(Notification notificacionMostrar) {
+		notificacionMostrar.setDelayMsec(2000);
+		notificacionMostrar.show(Page.getCurrent());
 	}
 	public void setUsuario(Usuario usuario) {
 		this.setVisible(usuario != null);

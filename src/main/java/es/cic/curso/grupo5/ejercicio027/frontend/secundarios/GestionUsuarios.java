@@ -15,6 +15,8 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.VerticalLayout;
 
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Operacion;
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Rol;
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 import es.cic.curso.grupo5.ejercicio027.backend.service.UsuarioService;
 import es.cic.curso.grupo5.ejercicio027.frontend.principal.MyUI;
@@ -213,7 +215,9 @@ public class GestionUsuarios extends HorizontalLayout {
 
 	private void aniadirUsuarios() {	
 		detalleUsuario.setVisible(true);
-		Usuario u = new Usuario("","","","",true);
+		Operacion operacion = new Operacion("");
+		Rol rol = new Rol("", operacion);
+		Usuario u = new Usuario("","", rol,"", true);
 		detalleUsuario.setUsuario(u);
 
 	}

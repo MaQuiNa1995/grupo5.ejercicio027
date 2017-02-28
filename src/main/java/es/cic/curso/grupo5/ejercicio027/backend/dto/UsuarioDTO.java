@@ -1,18 +1,20 @@
 package es.cic.curso.grupo5.ejercicio027.backend.dto;
 
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Rol;
+
 public class UsuarioDTO {
 
     Long id;
     String nombre;
     String password;
-    String rol;
+    Rol rol;
     String email;
 
 	public UsuarioDTO() {
 		super();
 	}
 	
-	public UsuarioDTO(String nombre, String password, String rol, String email) {
+	public UsuarioDTO(String nombre, String password, Rol rol, String email) {
 		super();
 		this.nombre = nombre;
 		this.password = password;
@@ -44,11 +46,11 @@ public class UsuarioDTO {
 		this.password = password;
 	}
 
-	public String getRol() {
+	public Rol getRol() {
 		return rol;
 	}
 
-	public void setRol(String rol) {
+	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
 

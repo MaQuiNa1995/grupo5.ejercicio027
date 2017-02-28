@@ -21,6 +21,7 @@ public class HistoricoConverter {
 		resultado.setUsuario(u.getNombre());
 		resultado.setOperacion(historico.getOperacion());
 		resultado.setHora(historico.getHora());
+		resultado.setPermitido(historico.isPermitido());
 		
 		return resultado;
 		
@@ -32,6 +33,7 @@ public class HistoricoConverter {
 		resultado.setUsuario(usuarioConverter.DTO2Entity(usuarioDTO));
 		resultado.setOperacion(historicoDTO.getOperacion());
 		resultado.setHora(historicoDTO.getHora());
+		resultado.setPermitido(historicoDTO.isPermitido());
 		return resultado;		
 	}
 	

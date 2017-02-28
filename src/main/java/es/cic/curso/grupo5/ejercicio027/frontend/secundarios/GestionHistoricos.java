@@ -47,7 +47,7 @@ public class GestionHistoricos  extends HorizontalLayout {
 
 		gridHistorico.setWidth(820, Unit.PIXELS);	
 
-		gridHistorico.setColumns("usuario","operacion","hora");
+		gridHistorico.setColumns("usuario","operacion","hora","permitido");
 	
 		gridHistorico.setFrozenColumnCount(1);
 		gridHistorico.setSelectionMode(SelectionMode.NONE);	
@@ -67,7 +67,7 @@ public class GestionHistoricos  extends HorizontalLayout {
 	private void aniadirHistorico() {	
 		
 		detalleHistorico.setVisible(true);
-		Historico h = new Historico("","",null);
+		Historico h = new Historico("","",null,true);
 		detalleHistorico.setHistorico(h);
 		gridHistorico.setContainerDataSource(
 				new BeanItemContainer<>(HistoricoDTO.class, listaHistoricos)

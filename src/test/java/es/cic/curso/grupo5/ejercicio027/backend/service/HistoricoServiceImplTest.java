@@ -64,7 +64,7 @@ public class HistoricoServiceImplTest {
 
 	@Test
 	public void testBorrarHistorico() {
-		Historico historicoABorrar = new Historico("abrir","24/02/2017 12:55", usuario1);
+		Historico historicoABorrar = new Historico("abrir","24/02/2017 12:55", usuario1,true);
 		historicoService.aniadirHistorico(historicoABorrar);
 		historicoService.borrarHistorico(historicoABorrar.getId());
 		List<Historico> listaHistorico = historicoService.listarHistorico();
@@ -90,9 +90,9 @@ public class HistoricoServiceImplTest {
 		entityManager.persist(usuario2);
 		entityManager.persist(usuario3);
 		
-		historico1 = new Historico("abrir","24/02/2017 12:55", usuario1);
-		historico2 = new Historico("cerrar","25/02/2017 12:55", usuario2);
-		historico3 = new Historico("modificar","26/02/2017 12:55", usuario3);
+		historico1 = new Historico("abrir","24/02/2017 12:55", usuario1,true);
+		historico2 = new Historico("cerrar","25/02/2017 12:55", usuario2, true);
+		historico3 = new Historico("modificar","26/02/2017 12:55", usuario3, true);
 
 		entityManager.persist(historico1);
 		entityManager.persist(historico2);

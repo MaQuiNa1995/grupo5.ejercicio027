@@ -12,7 +12,7 @@
             </column>
             <column name="nombre" type="VARCHAR(50)" />
             <column name="password" type="VARCHAR(50)" />
-            <column name="rol" type="VARCHAR(50)" />
+            <column name="idrol" type="INT(50)" />
             <column name="email" type="VARCHAR(50)" />
             <column name="activo" type="BOOLEAN" />
         </createTable>
@@ -27,6 +27,23 @@
              <column name="permitido" type="BOOLEAN" />
         </createTable>
         
+         <createTable catalogName="grupo5" tableName="ROL">
+            <column autoIncrement="true" name="id" type="INT(10)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="rol" type="VARCHAR(50)" />
+            <column name="idoperacion" type="INT(50)" />
+           
+        </createTable>
+         <createTable catalogName="grupo5" tableName="OPERACION">
+            <column autoIncrement="true" name="id" type="INT(10)">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="descripciom" type="VARCHAR(50)" />
+           
+        </createTable>
+        
+        
         <addForeignKeyConstraint 
             constraintName="fk_hitorico_idusuario" 
             referencedTableName="USUARIO" 
@@ -34,6 +51,20 @@
             baseTableName="HISTORICO" 
             referencedColumnNames="id"/>     
         
+        <addForeignKeyConstraint 
+            constraintName="fk_usuario_idrol" 
+            referencedTableName="ROL" 
+            baseColumnNames="idrol" 
+            baseTableName="USUARIO" 
+            referencedColumnNames="id"/>
+   
+    
+      <addForeignKeyConstraint 
+            constraintName="fk_rol_idoperacion" 
+            referencedTableName="OPERACION" 
+            baseColumnNames="idoperacion" 
+            baseTableName="ROL" 
+            referencedColumnNames="id"/>
     </changeSet>
     
 </databaseChangeLog>

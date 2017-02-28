@@ -24,7 +24,7 @@ public class Operacion implements Identificable<Long>{
     Long id;
 	
 	@Column(name ="descripcion")
-    String nombre;
+    String descripcion;
 
 	
 
@@ -33,20 +33,11 @@ public class Operacion implements Identificable<Long>{
 		// TODO Auto-generated constructor stub
 	}
 
-	public Operacion(String nombre) {
+	public Operacion(String descripcion) {
 		super();
-		this.nombre = nombre;
-	}
-	
-
-	public String getNombre() {
-		return nombre;
+		this.descripcion = descripcion;
 	}
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
- 
 	@Override
 	public Long getId() {
 		return this.id;
@@ -79,6 +70,18 @@ public class Operacion implements Identificable<Long>{
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 	
 	

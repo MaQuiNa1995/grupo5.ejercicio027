@@ -22,7 +22,7 @@ public class Validador {
 	}
 	
 	public boolean validarNombreApellidos(String nombreApellidos){
-		String patronNombreApellidos= "/w{0,50}/s{0,50}";
+		String patronNombreApellidos= "[a-zA-Z\\s]{1,50}";
 		
 		return (nombreApellidos.matches(patronNombreApellidos));
 	}

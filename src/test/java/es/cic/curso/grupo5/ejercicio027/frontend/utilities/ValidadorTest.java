@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import org.junit.Before;
 import org.junit.Test;
 
-import es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico;
-
 public class ValidadorTest {
 	
 	Validador sut;
@@ -47,7 +45,7 @@ public class ValidadorTest {
 	@Test
 	public void validarNombreApellidos() {
 		
-		String nombreApellidos="Christian Muñoz Ason";
+		String nombreApellidos="Christian Munoz Ason";
 		assertTrue(sut.validarNombreApellidos(nombreApellidos));
 		
 		nombreApellidos="Christian Muñoz Ason 54";

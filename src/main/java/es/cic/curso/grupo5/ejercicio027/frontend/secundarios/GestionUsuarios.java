@@ -69,6 +69,8 @@ public class GestionUsuarios extends HorizontalLayout {
 		aniadirUsuario.addClickListener(e->{	
 			aniadirUsuario.setVisible(false);
 			modificar.setVisible(false);
+			detalleUsuario.ocultaCheck();
+			detalleUsuario.cambiarTextoAniadir();
 			aniadirUsuarios();
 		});
 		
@@ -128,8 +130,6 @@ public class GestionUsuarios extends HorizontalLayout {
 	}
 	private void aniadirUsuarios() {	
 		detalleUsuario.setVisible(true);
-		detalleUsuario.ocultaCheck();
-		detalleUsuario.cambiarTextoAniadir();
 		Usuario u = new Usuario("","","","",true);
 		detalleUsuario.setUsuario(u);
 

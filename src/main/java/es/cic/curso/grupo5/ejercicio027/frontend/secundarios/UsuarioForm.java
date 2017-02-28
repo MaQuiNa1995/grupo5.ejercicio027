@@ -31,15 +31,13 @@ public class UsuarioForm extends FormLayout {
 	private TextField email;	
 	@PropertyId("rol")
 	protected ComboBox roles;
-//	@PropertyId("activo")
-	
-	
+	@PropertyId("activo")
 	private CheckBox activo;
 	
 	private NativeButton confirmar;
 	private NativeButton cancelar;	
 	private Usuario usuario;
-//	private NativeButton eliminar;
+
 	
 	@SuppressWarnings("unused")
 	private GestionUsuarios padre;
@@ -86,26 +84,18 @@ public class UsuarioForm extends FormLayout {
 
 		cancelar = new NativeButton("Cancelar");
 		cancelar.setIcon(FontAwesome.REPLY);
-		
-//		eliminar = new NativeButton("Eliminar usuario");
-//		eliminar.setIcon(FontAwesome.TRASH);
-		
-		activo = new CheckBox("Activo",usuario.isActivo());
+			
+		activo = new CheckBox("Activo");
 		
 		activo.addValueChangeListener(e->{
 			
-			if(activo.getValue()==true){
+			if(activo.getValue().equals(true)){
 				
 				usuario.setActivo(true);
-			}
-			
-			else usuario.setActivo(false);
-			
+			}		
 			
 		}); 
-		
-		
-		
+			
 	
 		confirmar.addClickListener(e->{
 			if(roles.getValue()==null||"".equals(nombre.getValue())|| "".equals(password.getValue()) || "".equals(email.getValue())){
@@ -126,19 +116,7 @@ public class UsuarioForm extends FormLayout {
 
 		});
 
-//		eliminar.addClickListener(e->{
-//			
-//			Notification notificacionOperacion = 
-//					new Notification("El usuario : "+ nombre.getValue()+" ha sido dado de baja");
-//			mostrarNotificacion(notificacionOperacion);
-//			usuario.setActivo(false);
-//			padre.cargaGridUsuarios(usuario);
-//			
-//		});
-//			
-	
-		
-		
+ 		
 		horizontal1.addComponents(nombre);
 		horizontal6.addComponent(password);
 		horizontal2.addComponents(roles);
@@ -164,8 +142,7 @@ public class UsuarioForm extends FormLayout {
 		}
 	}
  
-	public void ocultaCheck(){
-		
+	public void ocultaCheck(){		
 		activo.setVisible(false);	
 	}
 	public void muestraCheck(){

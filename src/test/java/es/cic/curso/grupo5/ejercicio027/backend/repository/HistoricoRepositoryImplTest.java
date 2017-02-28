@@ -7,7 +7,10 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico;
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Rol;
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Operacion;
+
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
@@ -20,15 +23,20 @@ public class HistoricoRepositoryImplTest extends AbstractRepositoryImplTest<Long
     private HistoricoRepository sut;
     
     Usuario usuario,usuario2,usuario3;
+    Rol rol;
+    Operacion operacion;
 
     @Before
     public void setUp() throws Exception {
         super.setUp();
-        usuario = new Usuario("Christian","curso18","Admin","maquina1995@gmail.com",false);
+        operacion = new Operacion("Copiar");
+        rol = new Rol("administrador", operacion);
+        
+        usuario = new Usuario("Christian","curso18",rol,"maquina1995@gmail.com",false);
         em.persist(usuario);
-        usuario2 = new Usuario("Christian2","curso18","Admin","maquina1995@gmail.com",true);
+        usuario2 = new Usuario("Christian2","curso18",rol,"maquina1995@gmail.com",true);
         em.persist(usuario2);
-        usuario3 = new Usuario("Christian3","curso18","Admin","maquina1995@gmail.com",true);
+        usuario3 = new Usuario("Christian3","curso18",rol,"maquina1995@gmail.com",true);
         em.persist(usuario3);
     }
 

@@ -187,9 +187,7 @@ public class GestionUsuarios extends HorizontalLayout {
 				new BeanItemContainer<>(Usuario.class, listaUsuariosActivos)
 				);
 		detalleUsuario.setUsuario(null);
-		
-		
-		
+			
 	}
 	private void cargarHabilitados() {
 		modificar.setVisible(true);
@@ -226,6 +224,7 @@ public class GestionUsuarios extends HorizontalLayout {
 		mostrar.setVisible(true);
 		detalleUsuario.setVisible(false);
 		usuarios.setVisible(false);
+		mostrar.clear();
 
 		if(user != null){
 			usuarioService.modificarUsuario(user);

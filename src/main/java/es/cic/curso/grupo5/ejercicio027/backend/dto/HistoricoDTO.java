@@ -4,6 +4,7 @@ public class HistoricoDTO {
 	String usuario;
 	String operacion;
 	String hora;
+	boolean permitido;
 	
 	public HistoricoDTO() {
 		super();
@@ -31,6 +32,14 @@ public class HistoricoDTO {
 
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
+	}
+
+	public boolean isPermitido() {
+		return permitido;
+	}
+
+	public void setPermitido(boolean permitido) {
+		this.permitido = permitido;
 	}
 	
 	

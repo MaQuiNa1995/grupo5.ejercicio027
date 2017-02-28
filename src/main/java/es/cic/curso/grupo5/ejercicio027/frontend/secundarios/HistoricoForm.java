@@ -45,6 +45,8 @@ public class HistoricoForm extends FormLayout {
 	protected ComboBox operacion;
 	@PropertyId("hora")
 	protected String hora;
+	@PropertyId("permitido")
+	protected boolean permitido;
 
 	private NativeButton confirmar;
 	private NativeButton cancelar;
@@ -55,9 +57,15 @@ public class HistoricoForm extends FormLayout {
 	private List<Usuario> listaUsuarios;
 	private final HorizontalLayout horizontal1;
 	private HistoricoService historicoService;
+	private List<String> administrador;
+	private List<String> supervisor;
+	private List<String> editor;
+	private List<String> invitado;
 	private List<String> listaNombres= new ArrayList<>();
+	private List<String> listaRoles = new ArrayList<>();
 	
 	public HistoricoForm(GestionHistoricos padre) {
+		permitido = false;
 		this.padre = padre;
 		historico = new Historico();
 		usuarioService = ContextLoader.getCurrentWebApplicationContext().getBean(UsuarioService.class);	
@@ -74,9 +82,14 @@ public class HistoricoForm extends FormLayout {
 		
 
 		List<String> listaOperaciones = new ArrayList<>();
-		listaOperaciones.add("borrar archivos");
-		listaOperaciones.add("calcular costes de empresa");		
-		listaOperaciones.add("realzar venta por internet");		
+		listaOperaciones.add("Añadir usuarios");
+		listaOperaciones.add("Modificar usuarios");
+		listaOperaciones.add("Eliminar usuarios");
+		listaOperaciones.add("Modificar archivos");
+		listaOperaciones.add("Borrar archivos");
+		listaOperaciones.add("Calcular costes de empresa");		
+		listaOperaciones.add("Realizar venta por internet");	
+		listaOperaciones.add("Listar ventas");
 		listaOperaciones.add("ingresar nóminas");
 
 
@@ -117,18 +130,60 @@ public class HistoricoForm extends FormLayout {
 		minutos.select(1);
 		minutos.setImmediate(true);
 		minutos.setWidth(90, Unit.PIXELS);
+		
+		
+		administrador = new ArrayList<>();
+		supervisor = new ArrayList<>();
+		editor = new ArrayList<>();
+		invitado = new ArrayList<>();
+		
+		
+		invitado.add("Realizar venta por internet");
+		
+		editor.add("Borrar archivos");
+		editor.add("Modificar archivos");
+		editor.add("Listar Ventas");
+		editor.add("Realizar venta por internet");
+		
+		supervisor.add("Ingresar nóminas");
+		supervisor.add("Calcular costes de empresa");
+		supervisor.add("Listar ventas");
+		supervisor.add("Añadir archivos");
+		supervisor.add("Modificar archivos");
+		
+		
+		administrador.add("Añadir usuarios");
+		administrador.add("Modificar usuarios");
+		administrador.add("Eliminar usuarios");
+		administrador.add("Modificar archivos");
+		administrador.add("Borrar archivos");
+		administrador.add("Calcular costes de empresa");		
+		administrador.add("Realizar venta por internet");	
+		administrador.add("Listar ventas");
+		administrador.add("ingresar nóminas");
  
+		
+		permitido = comprobarPermiso();
+		
 		confirmar = new NativeButton("Registrar histórico");
 		confirmar.setIcon(FontAwesome.SAVE);
 
 		cancelar = new NativeButton("Cancelar");
 		cancelar.setIcon(FontAwesome.REPLY);
-	 	
-					
+	 		listaRoles = new ArrayList<>();
+			listaRoles.add("administrador");
+			listaRoles.add("supervisor");		
+			listaRoles.add("editor");		
+			listaRoles.add("invitado");
+			
 		confirmar.addClickListener(e->{
+			
 			if(operacion.getValue()==null||horas.getValue()==null|| minutos.getValue()==null || historico.getUsuario()==null ||date.getValue()==null){	
 				Notification sample = new Notification("Rellene todos los campos");
-				mostrarNotificacion(sample);	
+				mostrarNotificacion(sample);
+				
+				
+				
 			}
 			else{
 				DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd ");
@@ -136,9 +191,13 @@ public class HistoricoForm extends FormLayout {
 				historico.setHora(convertido+horas.getValue() +":"+minutos.getValue());
 				historicoService.aniadirHistorico(historico);
 		
-				Notification notificacionOperacion = new Notification(nombreUser.getValue()+""
-						+ "realizo la operacion de: "+operacion.getValue());
-				mostrarNotificacion(notificacionOperacion);
+				Notification notificacion;
+				if(permitido){
+					notificacion = new Notification("ACCESO PERMITIDO");
+				}else{
+					notificacion = new Notification("ACCESO DENEGADO");
+				}
+				mostrarNotificacion(notificacion);
 				
 				nombreUser.clear();
 				nombreUser.setVisible(false);
@@ -188,8 +247,6 @@ public class HistoricoForm extends FormLayout {
 		nombreUser.addValueChangeListener(a->{
 			for(Usuario user :listaUsuarios){
 				if(nombreUser.getValue()==(user.getNombre())){
-					Notification sample = new Notification("Usuario con permisos de : "+user.getRol());
-					mostrarNotificacion(sample);
 					historico.setUsuario(user);
 				}
 			}			
@@ -201,6 +258,54 @@ public class HistoricoForm extends FormLayout {
 		notificacion.setDelayMsec(2000);
 		notificacion.show(Page.getCurrent());
 	}
+	
+	private boolean comprobarPermiso(){
+		boolean res = false;
+	     String rol = null ;
+		if(!listaRoles.isEmpty()){
+			
+			for(Usuario user :listaUsuarios){
+				if(nombreUser.getValue().equals(user.getNombre())){
+				      rol = user.getRol();
+				}
+			}		
+		
+			switch (rol) {
+	            case "adminitrador":  
+	            		for(int j= 0; j<= administrador.size(); j++){
+	            			if(administrador.equals(operacion.getValue())){
+	            				res = true;
+	            			}
+	            		}
+	                     break;
+	            case "supervisor":
+			            for(int j= 0; j<= supervisor.size(); j++){
+		        			if(supervisor.equals(operacion.getValue())){
+		        				res = true;
+		        			}
+		        		}
+	                     break;
+	            case "editor":
+			            for(int j= 0; j<= editor.size(); j++){
+		        			if(editor.equals(operacion.getValue())){
+		        				res = true;
+		        			}
+		        		}
+	                     break;
+	            case "invitado":
+			            for(int j= 0; j<= invitado.size(); j++){
+		        			if(invitado.equals(operacion.getValue())){
+		        				res = true;
+		        			}	
+		        		}
+	                     break;
+	        
+	        }	
+		}
+		
+		return res;	
+	}
+	
 	public void setHistorico(Historico historico) {
 		this.setVisible(historico != null);
 		this.historico = historico;

@@ -24,6 +24,7 @@
             <column name="operacion" type="VARCHAR(50)" />
             <column name="hora" type="VARCHAR(50)" />
             <column name="idusuario" type="INT(10)" />
+             <column name="permitido" type="BOOLEAN" />
         </createTable>
         
         <addForeignKeyConstraint 

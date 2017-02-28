@@ -9,6 +9,7 @@
         <class>es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico</class>
         <class>es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario</class>
         <class>es.cic.curso.grupo5.ejercicio027.backend.dominio.Rol</class>
+        <class>es.cic.curso.grupo5.ejercicio027.backend.dominio.Operacion</class>
         <!--
         	Ruta de las clases que va en el Dominio
         	

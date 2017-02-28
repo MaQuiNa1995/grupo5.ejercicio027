@@ -1,9 +1,13 @@
 package es.cic.curso.grupo5.ejercicio027.frontend.secundarios;
 
+ 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+ 
+ 
 import java.util.ArrayList;
 import java.util.List;
+
 
 import org.springframework.web.context.ContextLoader;
 
@@ -11,10 +15,13 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
+
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.FormLayout;
+
 import com.vaadin.ui.HorizontalLayout;
+
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Notification;
 
@@ -110,7 +117,7 @@ public class HistoricoForm extends FormLayout {
 		minutos.select(1);
 		minutos.setImmediate(true);
 		minutos.setWidth(90, Unit.PIXELS);
-	 	
+ 
 		confirmar = new NativeButton("Registrar histórico");
 		confirmar.setIcon(FontAwesome.SAVE);
 
@@ -204,5 +211,7 @@ public class HistoricoForm extends FormLayout {
 			BeanFieldGroup.bindFieldsUnbuffered(new Historico(), this);
 		}
 	}
- 	 
+
+
 }
+

@@ -56,7 +56,7 @@ public class GestionHistoricos  extends HorizontalLayout {
 
 		aniadirHistorico.addClickListener(e->{	
 			aniadirHistorico.setVisible(false);
-			detalleHistorico.atualizarUsuarios();
+			detalleHistorico.actualizarUsuarios();
 			aniadirHistorico();
 		});
 		
@@ -67,7 +67,7 @@ public class GestionHistoricos  extends HorizontalLayout {
 	private void aniadirHistorico() {	
 		
 		detalleHistorico.setVisible(true);
-		Historico h = new Historico("","",null,true);
+		Historico h = new Historico("","",null,false);
 		detalleHistorico.setHistorico(h);
 		gridHistorico.setContainerDataSource(
 				new BeanItemContainer<>(HistoricoDTO.class, listaHistoricos)

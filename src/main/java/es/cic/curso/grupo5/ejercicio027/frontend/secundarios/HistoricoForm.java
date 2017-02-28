@@ -62,9 +62,12 @@ public class HistoricoForm extends FormLayout {
 	private List<String> editor;
 	private List<String> invitado;
 	private List<String> listaNombres= new ArrayList<>();
-	private List<String> listaRoles = new ArrayList<>();
+	private List<String> listaRoles;
+	
+	private  String rol = null ;
 	
 	public HistoricoForm(GestionHistoricos padre) {
+		
 		permitido = false;
 		this.padre = padre;
 		historico = new Historico();
@@ -110,8 +113,11 @@ public class HistoricoForm extends FormLayout {
 		}
         
         DateField date = new DateField("fecha");
-		
+
         
+		
+		
+		
 		operacion = new ComboBox("Operación",listaOperaciones);
 		operacion.setNullSelectionAllowed(false);
 		operacion.select(1);
@@ -162,35 +168,39 @@ public class HistoricoForm extends FormLayout {
 		administrador.add("Listar ventas");
 		administrador.add("ingresar nóminas");
  
+
+ 		listaRoles = new ArrayList<>();
+		listaRoles.add("administrador");
+		listaRoles.add("supervisor");		
+		listaRoles.add("editor");		
+		listaRoles.add("invitado");
 		
-		permitido = comprobarPermiso();
+		
 		
 		confirmar = new NativeButton("Registrar histórico");
 		confirmar.setIcon(FontAwesome.SAVE);
 
 		cancelar = new NativeButton("Cancelar");
 		cancelar.setIcon(FontAwesome.REPLY);
-	 		listaRoles = new ArrayList<>();
-			listaRoles.add("administrador");
-			listaRoles.add("supervisor");		
-			listaRoles.add("editor");		
-			listaRoles.add("invitado");
+		
 			
 		confirmar.addClickListener(e->{
 			
 			if(operacion.getValue()==null||horas.getValue()==null|| minutos.getValue()==null || historico.getUsuario()==null ||date.getValue()==null){	
 				Notification sample = new Notification("Rellene todos los campos");
 				mostrarNotificacion(sample);
-				
-				
+			
 				
 			}
 			else{
+				System.out.print(historico.getUsuario().getRol());
+				permitido = comprobarPermiso(historico.getUsuario().getRol());
 				DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd ");
 				String convertido = fechaHora.format(date.getValue());
 				historico.setHora(convertido+horas.getValue() +":"+minutos.getValue());
+				historico.setPermitido(permitido);
 				historicoService.aniadirHistorico(historico);
-		
+				
 				Notification notificacion;
 				if(permitido){
 					notificacion = new Notification("ACCESO PERMITIDO");
@@ -228,7 +238,7 @@ public class HistoricoForm extends FormLayout {
 		addComponents(horizontal1,horizontal2,horizontal3,espacio,confirmar,cancelar);	
 	
 	}
-	public void atualizarUsuarios() {
+	public void actualizarUsuarios() {
 		listaUsuarios = usuarioService.listarUsuario();
 		listaNombres.clear();
 		for(Usuario user :listaUsuarios){	
@@ -247,6 +257,7 @@ public class HistoricoForm extends FormLayout {
 		nombreUser.addValueChangeListener(a->{
 			for(Usuario user :listaUsuarios){
 				if(nombreUser.getValue()==(user.getNombre())){
+					rol = user.getRol();
 					historico.setUsuario(user);
 				}
 			}			
@@ -259,51 +270,27 @@ public class HistoricoForm extends FormLayout {
 		notificacion.show(Page.getCurrent());
 	}
 	
-	private boolean comprobarPermiso(){
+	private boolean comprobarPermiso(String rol){
 		boolean res = false;
-	    String rol = null ;
-		if(!listaRoles.isEmpty()){
-			
-			
-				for(Usuario user :listaUsuarios){
-					if(nombreUser.getValue()==(user.getNombre())){
-						rol = user.getRol();
-					}
-				}			
-		
 		
 			switch (rol) {
-	            case "adminitrador":  
-	            		for(int j= 0; j<= administrador.size(); j++){
-	            			if(administrador.equals(operacion.getValue())){
-	            				res = true;
-	            			}
-	            		}
+			
+	            case "administrador":  
+	            	 res = administrador.contains(operacion.getValue().toString());
 	                     break;
 	            case "supervisor":
-			            for(int j= 0; j<= supervisor.size(); j++){
-		        			if(supervisor.equals(operacion.getValue())){
-		        				res = true;
-		        			}
-		        		}
+	            	 res = supervisor.contains(operacion.getValue().toString());
 	                     break;
 	            case "editor":
-			            for(int j= 0; j<= editor.size(); j++){
-		        			if(editor.equals(operacion.getValue())){
-		        				res = true;
-		        			}
-		        		}
+			         res = editor.contains(operacion.getValue().toString());
+		        		
 	                     break;
 	            case "invitado":
-			            for(int j= 0; j<= invitado.size(); j++){
-		        			if(invitado.equals(operacion.getValue())){
-		        				res = true;
-		        			}	
-		        		}
+	            	res = invitado.contains(operacion.getValue().toString());
 	                     break;
 	        
 	        }	
-		}
+		
 		
 		return res;	
 	}

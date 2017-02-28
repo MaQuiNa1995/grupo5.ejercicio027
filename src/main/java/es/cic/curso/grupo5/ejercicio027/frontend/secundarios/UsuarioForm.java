@@ -6,11 +6,14 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
+import com.vaadin.ui.AbstractField;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
@@ -28,15 +31,17 @@ public class UsuarioForm extends FormLayout {
 	private TextField email;	
 	@PropertyId("rol")
 	protected ComboBox roles;
+	@PropertyId("activo")
+	private CheckBox activo;
 	
 	private NativeButton confirmar;
 	private NativeButton cancelar;	
 	private Usuario usuario;
-	private NativeButton eliminar;
 
+	
 	@SuppressWarnings("unused")
 	private GestionUsuarios padre;
-	
+
 	public UsuarioForm(GestionUsuarios padre) {
 		this.padre = padre;
 
@@ -79,10 +84,18 @@ public class UsuarioForm extends FormLayout {
 
 		cancelar = new NativeButton("Cancelar");
 		cancelar.setIcon(FontAwesome.REPLY);
+			
+		activo = new CheckBox("Activo");
 		
-		eliminar = new NativeButton("Eliminar usuario");
-		eliminar.setIcon(FontAwesome.TRASH);
-	 
+		activo.addValueChangeListener(e->{
+			
+			if(activo.getValue().equals(true)){
+				
+				usuario.setActivo(true);
+			}		
+			
+		}); 
+			
 	
 		confirmar.addClickListener(e->{
 			if(roles.getValue()==null||"".equals(nombre.getValue())|| "".equals(password.getValue()) || "".equals(email.getValue())){
@@ -103,21 +116,13 @@ public class UsuarioForm extends FormLayout {
 
 		});
 
-		eliminar.addClickListener(e->{
-			
-			Notification notificacionOperacion = 
-					new Notification("El usuario : "+ nombre.getValue()+" ha sido dado de baja");
-			mostrarNotificacion(notificacionOperacion);
-			usuario.setActivo(false);
-			padre.cargaGridUsuarios(usuario);
-			
-		});
-			
+ 		
 		horizontal1.addComponents(nombre);
 		horizontal6.addComponent(password);
 		horizontal2.addComponents(roles);
 		horizontal3.addComponents(email);
-		horizontal5.addComponents(confirmar,eliminar);
+		horizontal5.addComponents(confirmar);
+		espacio.addComponent(activo);
 		addComponents(horizontal1,horizontal6,horizontal2,horizontal3,espacio,horizontal5,cancelar);	
 
 		setUsuario(null);	
@@ -136,11 +141,12 @@ public class UsuarioForm extends FormLayout {
 			BeanFieldGroup.bindFieldsUnbuffered(new Usuario(), this);
 		}
 	}
-	public void verEliminar() {
-		eliminar.setVisible(true);
+ 
+	public void ocultaCheck(){		
+		activo.setVisible(false);	
 	}
-	public void esconderEliminar() {
-		eliminar.setVisible(false);
+	public void muestraCheck(){
+		activo.setVisible(true);	
 	}
 	public void cambiarTextoAniadir(){
 		confirmar.setCaption("Añadir");	
@@ -148,5 +154,6 @@ public class UsuarioForm extends FormLayout {
 	public void cambiarTextoModifi(){
 		confirmar.setCaption("Modificar");	
 	}
+	
 		
 }

@@ -64,7 +64,7 @@ public class HistoricoForm extends FormLayout {
 	private List<String> listaNombres= new ArrayList<>();
 	private List<String> listaRoles;
 	
-	private  String rol = null ;
+	String rol;
 	
 	public HistoricoForm(GestionHistoricos padre) {
 		

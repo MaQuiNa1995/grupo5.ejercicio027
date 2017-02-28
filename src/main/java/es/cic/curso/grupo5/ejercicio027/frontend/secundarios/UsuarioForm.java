@@ -6,14 +6,12 @@ import com.vaadin.data.fieldgroup.BeanFieldGroup;
 import com.vaadin.data.fieldgroup.PropertyId;
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Page;
-import com.vaadin.ui.AbstractField;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Notification;
-import com.vaadin.ui.Notification.Type;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
@@ -103,9 +101,9 @@ public class UsuarioForm extends FormLayout {
 			Validador v = new Validador();
 			
 			boolean noNulo=
-					roles.getValue()==null||
-					"".equals(nombre.getValue())||
-					"".equals(password.getValue())||
+					roles.getValue()==null&&
+					"".equals(nombre.getValue())&&
+					"".equals(password.getValue())&&
 					"".equals(email.getValue());
 			
 			boolean bienEscrito=
@@ -126,7 +124,7 @@ public class UsuarioForm extends FormLayout {
 				padre.cargaGridUsuarios(usuario);
 
 			} else {
-				String camposMal="Los Siguientes Campos Están Mal Escritos o Imcompletos Recuerde Que El Limite De Carácteres Es 50: ";
+				String camposMal="Los Siguientes Campos Están Mal Escritos o Imcompletos: ";
 				
 				if(!v.validarNombreApellidos(nombre.getValue()))
 					camposMal = camposMal.concat("Nombre ");
@@ -137,8 +135,15 @@ public class UsuarioForm extends FormLayout {
 				if(!v.validarLongitudTexto(password.getValue()))
 					camposMal = camposMal.concat("Contraseña ");
 				
-				if(roles.getValue()==null)
+				if(roles.getValue().toString()=="")
 					camposMal = camposMal.concat("Roles ");
+				
+				if ((nombre.getValue().toCharArray().length>50)
+						||	(email.getValue().toCharArray().length>50)
+						||	password.getValue().toCharArray().length>50)
+				{
+					camposMal = camposMal.concat("Recuerda Que El Limite De Carácteres Es 50 ");
+				}
 				
 				Notification notificacionCampoMalEscrito = new Notification(camposMal);
 				mostrarNotificacion(notificacionCampoMalEscrito);

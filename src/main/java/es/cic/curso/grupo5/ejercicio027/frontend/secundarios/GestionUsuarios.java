@@ -60,7 +60,7 @@ public class GestionUsuarios extends HorizontalLayout {
 		gridUsuarios = new Grid();
 		gridUsuarios.setWidth(800, Unit.PIXELS);
 		gridUsuarios.setHeight(540, Unit.PIXELS);
-		gridUsuarios.setColumns("nombre","password","rol","email");
+		gridUsuarios.setColumns("nombre","password","rol","email","activo");
 		gridUsuarios.setFrozenColumnCount(1);
 		gridUsuarios.setSelectionMode(SelectionMode.NONE);
 
@@ -78,9 +78,9 @@ public class GestionUsuarios extends HorizontalLayout {
 			listaUsuarios = usuarioService.listarUsuario();
 			listaNombres.clear();
 			for(Usuario user :listaUsuarios){			
-				if(user.isActivo()){
+				//if(user.isActivo()){
 				listaNombres.add(user.getNombre());
-				}
+				//}
 			}
 			usuarios = new ComboBox("Nombre",listaNombres);
 			usuarios.setInputPrompt("Seleccione usuario a madificar");
@@ -102,7 +102,7 @@ public class GestionUsuarios extends HorizontalLayout {
 				for(Usuario user :listaUsuarios){
 					if(usuarios.getValue()==(user.getNombre())){
 						detalleUsuario.setVisible(true);
-						detalleUsuario.verEliminar();
+						detalleUsuario.muestraCheck();
 						detalleUsuario.cambiarTextoModifi();
 						detalleUsuario.setUsuario(user);
 						cancelar.setVisible(false);
@@ -128,7 +128,7 @@ public class GestionUsuarios extends HorizontalLayout {
 	}
 	private void aniadirUsuarios() {	
 		detalleUsuario.setVisible(true);
-		detalleUsuario.esconderEliminar();
+		detalleUsuario.ocultaCheck();
 		detalleUsuario.cambiarTextoAniadir();
 		Usuario u = new Usuario("","","","",true);
 		detalleUsuario.setUsuario(u);
@@ -151,7 +151,7 @@ public class GestionUsuarios extends HorizontalLayout {
 		List<Usuario> listaUsuariosActivos = new ArrayList<>();
 		for (Usuario usuariosActivo : listaUsuarios) {
 
-			if(usuariosActivo.isActivo())
+			if((usuariosActivo.isActivo())||!(usuariosActivo.isActivo()))
 				listaUsuariosActivos.add(usuariosActivo);
 		}
 

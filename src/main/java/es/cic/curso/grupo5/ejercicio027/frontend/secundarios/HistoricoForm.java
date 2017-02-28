@@ -194,7 +194,7 @@ public class HistoricoForm extends FormLayout {
 			}
 			else{
 				System.out.print(historico.getUsuario().getRol());
-				permitido = comprobarPermiso(historico.getUsuario().getRol());
+				permitido = comprobarPermiso(historico.getUsuario().getRol().getRol());
 				DateFormat fechaHora = new SimpleDateFormat("yyyy-MM-dd ");
 				String convertido = fechaHora.format(date.getValue());
 				historico.setHora(convertido+horas.getValue() +":"+minutos.getValue());
@@ -257,7 +257,7 @@ public class HistoricoForm extends FormLayout {
 		nombreUser.addValueChangeListener(a->{
 			for(Usuario user :listaUsuarios){
 				if(nombreUser.getValue()==(user.getNombre())){
-					rol = user.getRol();
+					rol = user.getRol().getRol();
 					historico.setUsuario(user);
 				}
 			}			

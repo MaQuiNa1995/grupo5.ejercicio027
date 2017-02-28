@@ -7,6 +7,7 @@ import org.springframework.web.context.ContextLoader;
 
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Grid;
 import com.vaadin.ui.Grid.SelectionMode;
@@ -35,6 +36,7 @@ public class GestionUsuarios extends HorizontalLayout {
 	private ComboBox usuarios=new ComboBox();
 	List<String> listaNombres = new ArrayList<>();
 	private NativeButton cancelar;
+	private ComboBox mostrar;
 
 	public GestionUsuarios(MyUI padre){
 		this.padre = padre;
@@ -70,13 +72,48 @@ public class GestionUsuarios extends HorizontalLayout {
 			aniadirUsuario.setVisible(false);
 			modificar.setVisible(false);
 			detalleUsuario.ocultaCheck();
+			mostrar.setVisible(false);
 			detalleUsuario.cambiarTextoAniadir();
 			aniadirUsuarios();
 		});
 		
-	
+		List<String> listaModosMostrar = new ArrayList<>();
+		listaModosMostrar.add("Mostrar todos");
+		listaModosMostrar.add("mostrar habilitados");		
+		listaModosMostrar.add("mostrar deshabilitados");		
+		
+		mostrar = new ComboBox("Visualizacion",listaModosMostrar);
+		mostrar.setNullSelectionAllowed(false);
+		mostrar.select(1);
+		mostrar.setImmediate(true);
+		mostrar.setWidth(300, Unit.PIXELS);
+		mostrar.setInputPrompt("que usuarios quiere ver");
+		
+		
+		mostrar.addValueChangeListener(e->{
+			
+			
+			if(mostrar.getValue()=="Mostrar todos"){
+				
+				cargaGridUsuarios(null);
+				
+			}
+			else {
+				
+				if(mostrar.getValue()=="mostrar habilitados")
+			
+				cargarHabilitados();
+			
+			
+			else cargarDeshabilitados();
+		
+			}
+		});
+		
+		
+		
 		modificar.addClickListener(e->{
-
+			
 			listaUsuarios = usuarioService.listarUsuario();
 			listaNombres.clear();
 			for(Usuario user :listaUsuarios){			
@@ -91,6 +128,7 @@ public class GestionUsuarios extends HorizontalLayout {
 			usuarios.setImmediate(true);
 			usuarios.setWidth(300, Unit.PIXELS);
 
+			mostrar.setVisible(false);
 			aniadirUsuario.setVisible(false);
 			modificar.setVisible(false);
 			usuarios.setVisible(true);
@@ -114,6 +152,7 @@ public class GestionUsuarios extends HorizontalLayout {
 
 			cancelar.addClickListener(a->{
 				
+				mostrar.setVisible(true);
 				usuarios.setVisible(false);
 				cancelar.setVisible(false);
 				aniadirUsuario.setVisible(true);
@@ -123,11 +162,57 @@ public class GestionUsuarios extends HorizontalLayout {
 						
 		});
 
-		vertical.addComponents(aniadirUsuario,modificar,extra,detalleUsuario);
+		vertical.addComponents(aniadirUsuario,modificar,mostrar,extra,detalleUsuario);
 		addComponents(gridUsuarios,vertical);
 
 		cargaGridUsuarios(null);	
 	}
+	private void cargarDeshabilitados() {
+		 
+		modificar.setVisible(true);
+		aniadirUsuario.setVisible(true);
+		mostrar.setVisible(true);
+		detalleUsuario.setVisible(false);
+		usuarios.setVisible(false);
+		listaUsuarios= usuarioService.listarUsuario();
+
+		List<Usuario> listaUsuariosActivos = new ArrayList<>();
+		for (Usuario usuariosActivo : listaUsuarios) {
+
+			if(!(usuariosActivo.isActivo()))
+				listaUsuariosActivos.add(usuariosActivo);
+		}
+
+		gridUsuarios.setContainerDataSource(
+				new BeanItemContainer<>(Usuario.class, listaUsuariosActivos)
+				);
+		detalleUsuario.setUsuario(null);
+		
+		
+		
+	}
+	private void cargarHabilitados() {
+		modificar.setVisible(true);
+		aniadirUsuario.setVisible(true);
+		mostrar.setVisible(true);
+		detalleUsuario.setVisible(false);
+		usuarios.setVisible(false);
+		listaUsuarios= usuarioService.listarUsuario();
+
+		List<Usuario> listaUsuariosActivos = new ArrayList<>();
+		for (Usuario usuariosActivo : listaUsuarios) {
+
+			if((usuariosActivo.isActivo()))
+				listaUsuariosActivos.add(usuariosActivo);
+		}
+
+		gridUsuarios.setContainerDataSource(
+				new BeanItemContainer<>(Usuario.class, listaUsuariosActivos)
+				);
+		detalleUsuario.setUsuario(null);
+		
+	}
+
 	private void aniadirUsuarios() {	
 		detalleUsuario.setVisible(true);
 		Usuario u = new Usuario("","","","",true);
@@ -138,7 +223,7 @@ public class GestionUsuarios extends HorizontalLayout {
 	public void cargaGridUsuarios(Usuario user) {
 		modificar.setVisible(true);
 		aniadirUsuario.setVisible(true);
-
+		mostrar.setVisible(true);
 		detalleUsuario.setVisible(false);
 		usuarios.setVisible(false);
 

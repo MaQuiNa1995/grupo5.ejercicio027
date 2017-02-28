@@ -39,7 +39,10 @@
             <column autoIncrement="true" name="id" type="INT(10)">
                 <constraints primaryKey="true" />
             </column>
-            <column name="descripciom" type="VARCHAR(50)" />
+
+
+            <column name="descripcion" type="VARCHAR(50)" />
+
            
         </createTable>
         

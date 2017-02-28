@@ -2,9 +2,12 @@ package es.cic.curso.grupo5.ejercicio027.backend.dominio;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import es.cic.curso.grupo5.ejercicio027.backend.repository.Identificable;
@@ -28,8 +31,10 @@ public class Usuario implements Identificable<Long>{
 	@Column(name ="password")
     String password;
     
-	@Column(name ="rol")
-    String rol;
+
+    @JoinColumn(name = "idrol")
+    @ManyToOne(fetch = FetchType.LAZY) //@ManyToOne(fetch = FetchType.EAGER)//modificado para probar sin dtos
+    private Rol rol;
     
 	@Column(name ="email")
     String email;
@@ -41,7 +46,7 @@ public class Usuario implements Identificable<Long>{
 		super();
 	}
 	
-	public Usuario(String nombre, String password, String rol, String email,boolean activo) {
+	public Usuario(String nombre, String password, Rol rol, String email,boolean activo) {
 		super();
 		this.nombre = nombre;
 		this.password = password;
@@ -75,11 +80,11 @@ public class Usuario implements Identificable<Long>{
 		this.password = password;
 	}
 
-	public String getRol() {
+	public Rol getRol() {
 		return rol;
 	}
 
-	public void setRol(String rol) {
+	public void setRol(Rol rol) {
 		this.rol = rol;
 	}
 

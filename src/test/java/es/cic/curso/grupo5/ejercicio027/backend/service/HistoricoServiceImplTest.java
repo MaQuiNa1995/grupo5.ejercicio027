@@ -20,6 +20,8 @@ import org.springframework.test.context.transaction.TransactionalTestExecutionLi
 import org.springframework.transaction.annotation.Transactional;
 
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Historico;
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Operacion;
+import es.cic.curso.grupo5.ejercicio027.backend.dominio.Rol;
 import es.cic.curso.grupo5.ejercicio027.backend.dominio.Usuario;
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -42,6 +44,11 @@ public class HistoricoServiceImplTest {
 	private Usuario usuario1;
 	private Usuario usuario2;
 	private Usuario usuario3;
+	
+	private Rol rol1;
+	private Rol rol2;
+	private Rol rol3;
+	private Operacion operacion;
 	
 	
 	@Before
@@ -82,9 +89,20 @@ public class HistoricoServiceImplTest {
 	
 	private void inicializaBaseDeDatos() {
 		
-		usuario1 = new Usuario("juan", "juan", "administrador", "juan@hotmail.com",true);
-		usuario2 = new Usuario("pepe", "pepe", "invitado", "pepe@hotmail.com",true);
-		usuario3 = new Usuario("pedro", "pedro", "inivitado", "pedro@hotmail.com",true);
+		operacion = new Operacion("Borrar");
+		entityManager.persist(operacion);
+		
+		rol1 = new Rol("administrador", operacion);
+		rol2 = new Rol("invitado", operacion);
+		rol3 = new Rol("invitado", operacion);
+		entityManager.persist(rol1);
+		entityManager.persist(rol2);
+		entityManager.persist(rol3);
+		
+		
+		usuario1 = new Usuario("juan", "juan", rol1, "juan@hotmail.com",true);
+		usuario2 = new Usuario("pepe", "pepe", rol2, "pepe@hotmail.com",true);
+		usuario3 = new Usuario("pedro", "pedro", rol3, "pedro@hotmail.com",true);
 
 		entityManager.persist(usuario1);
 		entityManager.persist(usuario2);

@@ -261,14 +261,16 @@ public class HistoricoForm extends FormLayout {
 	
 	private boolean comprobarPermiso(){
 		boolean res = false;
-	     String rol = null ;
+	    String rol = null ;
 		if(!listaRoles.isEmpty()){
 			
-			for(Usuario user :listaUsuarios){
-				if(nombreUser.getValue().equals(user.getNombre())){
-				      rol = user.getRol();
-				}
-			}		
+			
+				for(Usuario user :listaUsuarios){
+					if(nombreUser.getValue()==(user.getNombre())){
+						rol = user.getRol();
+					}
+				}			
+		
 		
 			switch (rol) {
 	            case "adminitrador":  
